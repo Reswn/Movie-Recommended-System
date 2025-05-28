@@ -7,6 +7,7 @@ Anime merupakan salah satu bentuk hiburan visual yang sangat populer, terutama d
 Dalam studi oleh Sitanggang et al. (2023), dijelaskan bahwa sistem rekomendasi anime sangat membantu pengguna untuk menemukan judul yang sesuai dengan preferensi mereka dengan cara memprediksi item yang relevan melalui pendekatan berbasis data seperti Singular Value Decomposition (SVD) dan Cosine Similarity [1]. Hal ini membuktikan bahwa metode sistem rekomendasi telah terbukti mampu meningkatkan pengalaman pengguna secara signifikan. Berdasarkan pemahaman tersebut, proyek ini berfokus pada pembuatan sistem rekomendasi anime yang menggabungkan pendekatan content-based filtering serta algoritma supervised learning seperti K-Nearest Neighbor, Random Forest, dan Gradient Boosting. Sistem ini diharapkan mampu menyajikan rekomendasi anime yang lebih akurat dan personal sesuai dengan karakteristik pengguna.
 
 Referensi:
+
 [1] A. Sitanggang, A. D. Harahap, A. Karimullah, Y. A. Dewantara, C. Rozikin, “Sistem Rekomendasi Anime Menggunakan Metode Singular Value Decomposition (SVD) dan Cosine Similarity,” Ilmu Komputer, Universitas Singaperbangsa Karawang, 2023.
 
 
