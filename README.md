@@ -1,5 +1,5 @@
 # Laporan Proyek Machine Learning - RENI KARTIKA SUWANDI
-
+![Top 15 Anime Genres](attachment://Top_15_Anime_Genres.png)
 ## Project Overview
 Anime merupakan salah satu bentuk hiburan visual yang sangat populer, terutama di kalangan generasi muda. Kepopulerannya tidak hanya terbatas di Jepang, tetapi juga telah merambah hingga ke berbagai belahan dunia, termasuk Indonesia. Namun, tingginya minat terhadap anime juga membawa tantangan tersendiri, yakni banyaknya jumlah judul dan ragam genre yang membuat pengguna kesulitan memilih tontonan yang sesuai dengan selera mereka. Oleh karena itu, sistem rekomendasi menjadi solusi penting untuk mempermudah pengguna dalam menemukan anime yang relevan dan menarik bagi mereka. Sistem seperti ini bertujuan untuk menyederhanakan proses pencarian dan meningkatkan kepuasan pengguna terhadap platform penyedia layanan tontonan.
 
