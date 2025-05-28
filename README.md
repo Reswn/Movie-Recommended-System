@@ -30,7 +30,7 @@ Situasi ini menciptakan urgensi tinggi bagi platform untuk mengembangkan sistem 
 ## **Solution Approach**
 Untuk mencapai tujuan proyek dalam memberikan rekomendasi anime yang sesuai dengan preferensi pengguna, berikut beberapa pendekatan teknis dan algoritmik yang diterapkan:
 
-### 1. Eksplorasi dan Pra-pemrosesan Data**
+### 1. Eksplorasi dan Pra-pemrosesan Data
 
 Langkah awal dilakukan eksplorasi data (*Exploratory Data Analysis / EDA*) untuk memahami struktur dataset serta mengidentifikasi pola dan anomali seperti nilai kosong (`NaN`) atau tidak valid pada kolom *Popularity* dan *Rank*. 
 
