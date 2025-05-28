@@ -245,15 +245,6 @@ Kolom `Genres` dan `Synopsis` diproses agar representasi konten menjadi seragam 
 
 ---
 
-### 1.3 Konsistensi Tipe Data  
-Beberapa fitur numerik seperti `Score`, `Episodes`, dan `Rank` seharusnya bertipe `float64` atau `int64`, namun dalam dataset asli bertipe `object`.
-
-#### Tujuan:
-- Agar fitur-fitur ini bisa digunakan dalam operasi matematis dan model regresi.
-- Meningkatkan stabilitas dan akurasi model machine learning.
-
----
-
 ### **2. Encoding Fitur Kategorikal**
 
 Fitur seperti `Type` dan `Rating` bersifat kategorikal dan tidak dapat langsung digunakan oleh model machine learning. Oleh karena itu, dilakukan Label Encoding untuk mengubahnya menjadi bentuk numerik.
