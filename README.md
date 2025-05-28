@@ -51,33 +51,13 @@ Untuk meningkatkan akurasi rekomendasi, berbagai jenis fitur — seperti vektor 
 
 ### 4. Model Prediksi dan Sistem Top-N Recommendation
 
-Untuk menghasilkan daftar Top-N anime yang relevan bagi pengguna, beberapa model pembelajaran mesin diuji coba dalam memprediksi skor preferensi pengguna terhadap suatu anime:
+Untuk menghasilkan daftar Top-N anime yang relevan bagi pengguna, beberapa model pembelajaran mesin diuji coba dalam memprediksi skor preferensi pengguna terhadap suatu anime, beberapa algoritma machine learning diuji coba untuk memprediksi skor preferensi pengguna terhadap anime, termasuk KNN, Random Forest, dan Gradient Boosting. Hasil prediksi digunakan bersama cosine similarity untuk menampilkan daftar Top-N anime yang paling relevan bagi pengguna.
 
-- **K-Nearest Neighbors (KNN)**  
-  Digunakan sebagai baseline model. Hasil evaluasi menunjukkan RMSE sebesar 0.5094 dan R² sebesar 0.5267, menandakan performa prediksi yang masih kurang optimal.
-
-- **Random Forest Regressor**  
-  Memberikan hasil yang sangat baik dengan RMSE hanya 0.0018 dan R² mencapai 1.0000, menunjukkan bahwa model ini hampir sempurna dalam memprediksi skor preferensi pengguna.
-
-- **Gradient Boosting Regressor**  
-  Juga memberikan performa tinggi dengan RMSE sebesar 0.0078 dan R² sebesar 0.9999, menjadikannya alternatif kuat selain Random Forest.
 
 ### 5. Evaluasi dan Pemilihan Model Terbaik
 
 Evaluasi model dilakukan melalui dua pendekatan utama:
 - **Evaluasi kuantitatif**: Menggunakan metrik RMSE dan R² untuk membandingkan akurasi prediksi model.
-
-#### Keunggulan Sistem
-
-Sistem rekomendasi ini dirancang dengan prinsip-prinsip berikut:
-
-- **Personalisasi**: Memberikan rekomendasi berdasarkan preferensi individu pengguna.
-- **Akurasi Tinggi**: Menggunakan kombinasi fitur konten dan model regresi prediktif untuk hasil yang presisi.
-- **Evaluasi Komprehensif**: Didukung oleh validasi kuantitatif dan kualitatif untuk memastikan kualitas sistem.
-- **Interpretabilitas**: Dilengkapi visualisasi yang membantu pemahaman dan analisis lebih lanjut.
-
----
-
 
 ## **Data Understanding**
 ### **1. Informasi Dataset**
