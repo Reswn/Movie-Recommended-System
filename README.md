@@ -205,7 +205,7 @@ Salah satu aspek penting dalam analisis dataset anime adalah memahami distribusi
 - **Hunter x Hunter (2011)** berada di peringkat 10, meskipun sering dianggap sebagai salah satu anime dengan cerita paling kompleks dan strategis.
 
 #### 4. Distribusi Data Popularity vs Rank
-![Plot Popularity vs Rank]([attachment://Top_15_Anime_Genres.png](https://github.com/Reswn/Anime-Recomendation-System/blob/main/src/popularity%20vs%20rank.png))
+![Plot Popularity vs Rank](https://github.com/Reswn/Anime-Recomendation-System/blob/main/src/popularity%20vs%20rank.png)
 
 ##### Insight Utama dari Scatter Plot Popularity vs. Rank
 
