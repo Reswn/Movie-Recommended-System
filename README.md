@@ -659,15 +659,13 @@ Meskipun belum melibatkan data interaksi pengguna, sistem ini sudah cukup kuat u
 
 ### Referensi
 
-[1] N. M. Roziqiin dan M. Faisal, "Sistem rekomendasi pemilihan anime menggunakan user-based collaborative filtering," *JIPI (Jurnal Ilmiah Penelitian dan Pembelajaran Informatika*, vol. 9, no. 1, 2024. [Online]. Available: https://doi.org/10.29100/jipi.v9i1.4222
+[5] J.M. Ph.D dan E. Kavlakoglu, "Content-based filtering," IBM, 2024. [Online]. Available: https://www.ibm.com/think/topics/content-based-filtering
 
 [2] GeeksforGeeks, "K-Nearest Neighbor(KNN) Algorithm," 2017. [Online]. Available: https://www.geeksforgeeks.org/k-nearest-neighbours/
 
 [3] GeeksforGeeks, "Random Forest Algorithm in Machine Learning," 2024. [Online]. Available: https://www.geeksforgeeks.org/random-forest-algorithm-in-machine-learning/
 
 [4] GeeksforGeeks, "Gradient Boosting in ML," 2020. [Online]. Available: https://www.geeksforgeeks.org/ml-gradient-boosting/
-
-[5] J.M. Ph.D dan E. Kavlakoglu, "Content-based filtering," IBM, 2024. [Online]. Available: https://www.ibm.com/think/topics/content-based-filtering
 
 ---
 
