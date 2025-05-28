@@ -110,6 +110,8 @@ Berikut merupakan tampilan lima baris pertama dari dataset anime yang digunakan 
 | 6        | Trigun                               | Trigun                       | トライガン                                   | 8.22  | Action, Adventure, Sci-Fi                  | Vash the Stampede is the man with a $60,000,000 bounty...              | TV    | 26         | Apr 1, 1998 to Sep 30, 1998     | Madhouse       | Manga    | 24 min per ep     | PG-13                          | 328.0  | 246        | 15035     | 356739.0  | 727252   | https://cdn.myanimelist.net/images/anime/7/203...  |
 | 7        | Witch Hunter Robin                   | Witch Hunter Robin           | Witch Hunter ROBIN (ウイッチハンターロビン) | 7.25  | Action, Drama, Mystery, Supernatural       | Robin Sena is a powerful craft user drafted into an agency...          | TV    | 26         | Jul 3, 2002 to Dec 25, 2002     | Sunrise        | Original | 25 min per ep     | PG-13                          | 2764.0 | 1795       | 613       | 42829.0   | 111931   | https://cdn.myanimelist.net/images/anime/10/19...  |
 | 8        | Bouken Ou Beet                       | Beet the Vandel Buster       | 冒険王ビィト                                 | 6.94  | Adventure, Fantasy, Supernatural           | It is the dark century and the people are suffering under darkness...  | TV    | 52         | Sep 30, 2004 to Sep 29, 2005    | Toei Animation | Manga    | 23 min per ep     | PG - Children                    | 4240.0 | 5126       | 14        | 6413.0    | 15001    | https://cdn.myanimelist.net/images/anime/7/215...  |
+
+
 **Catatan**: Setiap baris merepresentasikan informasi tentang satu judul anime, mulai dari nama, genre, deskripsi, hingga metadata seperti studio dan durasi.
 
 
