@@ -506,7 +506,7 @@ Hasil menunjukkan bahwa:
 | KNN                                  | - Sederhana<br>- Mudah dipahami                                            | - Sensitif terhadap skala data<br>- Lambat pada dataset besar |
 | Gabungan CBF + Prediksi Skor         | - Meningkatkan personalisasi rekomendasi                                   | - Lebih kompleks                                             |
 
-
+---
 ## Evaluation
 
 Pada tahap ini dilakukan evaluasi terhadap model sistem rekomendasi yang telah dibangun. Evaluasi bertujuan untuk memastikan bahwa rekomendasi yang diberikan relevan dan sesuai dengan preferensi pengguna. Berikut adalah metrik evaluasi yang digunakan serta hasil yang dicapai:
@@ -596,7 +596,7 @@ Tiga model pembelajaran mesin diuji coba untuk memprediksi skor anime berdasarka
 - R² score Random Forest mendekati 1 → model ini mampu menjelaskan hampir seluruh variasi data.
 - Hal ini membuktikan bahwa Random Forest sangat layak digunakan dalam sistem rekomendasi.
 
-
+---
 
 ## Kesimpulan
 
