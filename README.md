@@ -581,10 +581,7 @@ Pada tahap ini dilakukan evaluasi terhadap model sistem rekomendasi yang telah d
 
 #### Rumus:
 
-$$
-\text{R^2} = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}
-$$
-
+# R² = 1 − (∑(yᵢ − ŷᵢ)²) / (∑(yᵢ − ȳ)²)
 
 #### Keterangan:
 - $n$: Jumlah data pengamatan
