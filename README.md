@@ -26,10 +26,10 @@ Dalam era digital saat ini, jumlah konten hiburan seperti anime terus mengalami 
 - Mengintegrasikan pendekatan content-based filtering untuk menghasilkan rekomendasi yang lebih kontekstual dan adaptif terhadap profil pengguna.
 
 
- ### Solution statements
+ ## **Solution statements**
 Untuk mencapai tujuan proyek dalam memberikan rekomendasi anime yang sesuai dengan preferensi pengguna, berikut beberapa pendekatan teknis dan algoritmik yang diterapkan:
 
-#### 1. Eksplorasi dan Pra-pemrosesan Data
+### 1. Eksplorasi dan Pra-pemrosesan Data**
 
 Langkah awal dilakukan eksplorasi data (*Exploratory Data Analysis / EDA*) untuk memahami struktur dataset serta mengidentifikasi pola dan anomali seperti nilai kosong (`NaN`) atau tidak valid pada kolom *Popularity* dan *Rank*. 
 
@@ -39,15 +39,15 @@ Setelah itu, proses pembersihan data dilakukan dengan:
 - Melakukan normalisasi skor dan encoding fitur kategorikal seperti genre menggunakan `MultiLabelBinarizer`.
 - Mengubah deskripsi teks anime menjadi representasi numerik melalui `TF-IDF Vectorizer`, agar dapat digunakan dalam pencarian berbasis konten.
 
-#### 2. Sistem Rekomendasi Berbasis Konten (Content-Based Filtering)
+### 2. Sistem Rekomendasi Berbasis Konten (Content-Based Filtering)
 
 Representasi vektor dari fitur konten seperti deskripsi dan genre digunakan untuk menghitung kemiripan antar-anime menggunakan metrik *cosine similarity*. Dengan pendekatan ini, sistem dapat memberikan rekomendasi berdasarkan kedekatan konten dengan anime yang sedang ditinjau atau disukai oleh pengguna.
 
-#### 3. Eksperimen Penggabungan Fitur
+### 3. Eksperimen Penggabungan Fitur
 
 Untuk meningkatkan akurasi rekomendasi, berbagai jenis fitur — seperti vektor TF-IDF deskripsi, encoding genre, dan skor popularitas/rating — digabungkan menggunakan operasi *concatenation* pada *sparse matrix*. Kombinasi fitur ini memberikan representasi yang lebih kaya dan informatif, sehingga perhitungan kemiripan menjadi lebih presisi.
 
-#### 4. Model Prediksi dan Sistem Top-N Recommendation
+### 4. Model Prediksi dan Sistem Top-N Recommendation
 
 Untuk menghasilkan daftar Top-N anime yang relevan bagi pengguna, beberapa model pembelajaran mesin diuji coba dalam memprediksi skor preferensi pengguna terhadap suatu anime:
 
@@ -60,7 +60,7 @@ Untuk menghasilkan daftar Top-N anime yang relevan bagi pengguna, beberapa model
 - **Gradient Boosting Regressor**  
   Juga memberikan performa tinggi dengan RMSE sebesar 0.0078 dan R² sebesar 0.9999, menjadikannya alternatif kuat selain Random Forest.
 
-#### 5. Evaluasi dan Pemilihan Model Terbaik
+### 5. Evaluasi dan Pemilihan Model Terbaik
 
 Evaluasi model dilakukan melalui dua pendekatan utama:
 
@@ -81,8 +81,8 @@ Sistem rekomendasi ini dirancang dengan prinsip-prinsip berikut:
 ---
 
 
-## Data Understanding
-### Informasi Dataset
+## **Data Understanding**
+### **1. Informasi Dataset**
 Metadata Dataset
 
 | **Jenis Informasi**        | **Keterangan**                                                                 |
@@ -95,12 +95,12 @@ Metadata Dataset
 | **Tags**                   | Arts and Entertainment, Movies and TV Shows, Anime and Manga, Popular Culture, Japan |
 | **Usability Score**        | 10.00 / 10                                                                       |
 
-### Struktur Data
+### **2. Struktur Data**
 Dataset terdiri dari informasi lengkap mengenai berbagai judul anime, termasuk detail genre, deskripsi, skor rating, popularitas, dan metadata lainnya. Dengan data ini, sistem rekomendasi dapat dibangun menggunakan pendekatan *content-based filtering* untuk memberikan saran anime sesuai preferensi pengguna.
 
 ---
-## Exploratory Data Analysis
-### 1. Informasi 5 Baris Pertama Dataset
+### **3. Exploratory Data Analysis**
+### 3.1 Informasi 5 Baris Pertama Dataset
 
 Berikut merupakan tampilan lima baris pertama dari dataset anime yang digunakan dalam proyek ini:
 
@@ -117,7 +117,7 @@ Berikut merupakan tampilan lima baris pertama dari dataset anime yang digunakan 
 
 
 
-### 2. Variabel Dataset Anime Recommendation
+### 3.2 Variabel Dataset Anime Recommendation
 
 Dataset ini berisi informasi lengkap mengenai berbagai judul anime, termasuk deskripsi, genre, popularitas, rating, dan metadata lainnya yang relevan untuk membangun sistem rekomendasi berbasis konten (*content-based filtering*). Berikut adalah deskripsi masing-masing variabel:
 
@@ -152,7 +152,7 @@ Dataset ini berisi informasi lengkap mengenai berbagai judul anime, termasuk des
 
 ---
 
-### 3. Ringkasan Informasi Dataset
+### 3.3 Ringkasan Informasi Dataset
 
 Dataset yang digunakan dalam proyek sistem rekomendasi anime ini memiliki struktur sebagai berikut:
 
