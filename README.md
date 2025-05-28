@@ -212,7 +212,6 @@ Salah satu aspek penting dalam analisis dataset anime adalah memahami distribusi
 - Menggabungkan dengan **peringkat** untuk memastikan kualitas anime tetap terjaga dan sesuai preferensi pengguna.
 - Anime dengan **peringkat tinggi tapi popularitas rendah** bisa direkomendasikan untuk pengguna yang ingin menjelajahi judul unik atau niche.
 
---- 
 
 
 ---
