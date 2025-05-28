@@ -63,11 +63,7 @@ Untuk menghasilkan daftar Top-N anime yang relevan bagi pengguna, beberapa model
 ### 5. Evaluasi dan Pemilihan Model Terbaik
 
 Evaluasi model dilakukan melalui dua pendekatan utama:
-
-- **Evaluasi manual**: Memeriksa relevansi hasil rekomendasi berdasarkan genre, deskripsi, dan popularitas anime.
 - **Evaluasi kuantitatif**: Menggunakan metrik RMSE dan R² untuk membandingkan akurasi prediksi model.
-  
-Dari hasil evaluasi tersebut, **Random Forest Regressor** dipilih sebagai model terbaik karena kemampuannya dalam memprediksi skor dengan sangat akurat.
 
 #### Keunggulan Sistem
 
