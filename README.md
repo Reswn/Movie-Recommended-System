@@ -300,7 +300,7 @@ Teknik ini membantu mengevaluasi performa model secara objektif.
 
 ---
 
-Modeling
+Modeling and Result
 ---
 
 Pada tahap ini, dibangun sistem rekomendasi berbasis konten (*Content-Based Filtering*) dan diuji coba beberapa model regresi untuk memprediksi skor anime. Tujuan dari tahapan ini adalah menghasilkan **Top-N rekomendasi anime** yang relevan berdasarkan konten dan genre dari judul input.
@@ -331,7 +331,7 @@ $$
 
 
 
-#### Contoh Output Rekomendasi  
+####  Contoh Output Rekomendasi  
 Misalnya, pengguna menyukai anime *"Naruto"*, maka sistem memberikan rekomendasi Top-5 anime berikut:
 
 | Peringkat | Judul Anime           | Alasan Rekomendasi                                      |
@@ -462,60 +462,49 @@ Hasil evaluasi:
 - **Random Forest Regressor** menjadi model terbaik karena mampu memprediksi skor anime dengan sangat presisi.
 - **Gradient Boosting** juga memberikan hasil yang sangat baik, menjadikannya alternatif yang layak.
 - **KNN** memiliki performa paling rendah, sehingga tidak disarankan sebagai model utama.
+  
+---
+### 6.  Hasil Rekomendasi Model Terbaik
+Berikut adalah hasil rekomendasi berbasis konten (*content-based filtering*) menggunakan cosine similarity untuk judul `"Naruto"`:
+
+| No | Judul Anime                                      | Score  | Genres                                | Similarity |
+|----|--------------------------------------------------|--------|----------------------------------------|------------|
+| 1  | Naruto: Shippuden                               | 8.26   | Action, Adventure, Fantasy              | 0.9826     |
+| 2  | Boruto: Naruto Next Generations                  | 6.06   | Action, Adventure, Fantasy              | 0.9767     |
+| 3  | One Piece                                       | 8.69   | Action, Adventure, Fantasy              | 0.9708     |
+| 4  | Hunter x Hunter (2011)                           | 9.04   | Action, Adventure, Fantasy              | 0.9708     |
+| 5  | Nanatsu no Taizai                                 | 7.67   | Action, Adventure, Fantasy              | 0.9707     |
+| 6  | Bleach                                          | 7.92   | Action, Adventure, Fantasy              | 0.9703     |
+| 7  | Nanatsu no Taizai: Imashime no Fukkatsu         | 7.59   | Action, Adventure, Fantasy              | 0.9698     |
+| 8  | Fairy Tail                                     | 7.57   | Action, Adventure, Fantasy              | 0.9695     |
+| 9  | Dungeon ni Deai wo Motomeru no wa Machigatteiru… | 7.55   | Action, Adventure, Fantasy              | 0.9692     |
+| 10 | Log Horizon                                      | 7.93   | Action, Adventure, Fantasy              | 0.9682     |
+
+>  *Keterangan*:  
+- **Score**: Skor rata-rata dari komunitas MyAnimeList.
+- **Genres**: Genre utama dari anime tersebut.
+- **Similarity**: Nilai kemiripan konten terhadap *"Naruto"* menggunakan metrik *cosine similarity* (semakin mendekati 1, semakin mirip).
 
 ---
 
-### 6. Proses Pelatihan dan Prediksi
+### 7. Analisis Hasil Rekomendasi
 
-Langkah-langkah pelatihan model adalah sebagai berikut:
-1. Dataset dibagi menjadi **data latih dan uji** dengan rasio 80:20 menggunakan `train_test_split`.
-2. Fitur gabungan (`combined_sparse`) digunakan sebagai input model.
-3. Target (`y`) berupa kolom `Score` yang sudah dibersihkan dan ternormalisasi.
-4. Setiap model dilatih menggunakan data latih dan dievaluasi pada data uji.
-5. Hasil prediksi digunakan sebagai tambahan bobot dalam proses rekomendasi akhir.
-
----
-
-### 7. Ringkasan Model dan Tujuan
-
-| No | Algoritma                    | Tujuan                                                                 |
-|----|-------------------------------|--------------------------------------------------------------------------|
-| 1  | Cosine Similarity             | Mencari anime serupa berdasarkan konten dan genre                       |
-| 2  | K-Nearest Neighbors          | Prediksi skor dasar untuk rekomendasi                                  |
-| 3  | Random Forest Regressor       | Prediksi skor dengan akurasi tertinggi                                 |
-| 4  | Gradient Boosting Regressor   | Alternatif prediksi skor yang sangat akurat                             |
+Hasil menunjukkan bahwa:
+- **Top rekomendasi** adalah *Naruto: Shippuden*, sebagai lanjutan langsung dari seri utama, memiliki genre dan alur cerita sangat serupa.
+- **One Piece**, **Hunter x Hunter (2011)**, dan **Bleach** juga masuk dalam daftar karena kesamaan genre seperti *Action*, *Adventure*, dan *Fantasy*.
+- Semua anime dalam daftar memiliki elemen aksi dan petualangan, menjadikannya relevan secara kontekstual untuk penggemar *Naruto*.
+- Meskipun beberapa anime memiliki skor lebih tinggi dari *Naruto*, sistem berhasil merekomendasikan anime yang benar-benar sesuai preferensi genre dan tema.
 
 ---
 
-### 4. Perbandingan Pendekatan
+### **Kelebihan dan Kekurangan Pendekatan yang Dipilih**
 
-| No | Aspek                        | Content-Based Filtering (CBF) | Regresi + Konten (Hybrid Approach) |
-|----|------------------------------|--------------------------------|-------------------------------------|
-| 1  | **Dasar Rekomendasi**       | Kesamaan konten               | Kesamaan konten + prediksi skor    |
-| 2  | **Kompleksitas Komputasi**  | Rendah                        | Sedikit lebih tinggi                 |
-| 3  | **Personalisasi**           | Baik                          | Lebih baik (dengan prediksi skor)   |
-| 4  | **Cold Start Problem**      | Ada                           | Sebagian tertangani jika ada metadata |
-| 5  | **Kecepatan Respon**        | Cepat                         | Sedikit lebih lambat                 |
-| 6  | **Akurasi Rekomendasi**    | Akurat untuk konten serupa    | Lebih akurat dengan pertimbangan skor |
-
----
-
-### 5. Kelebihan dan Kekurangan Pendekatan
-
-#### Kelebihan:
-- **Relevansi Tinggi**: Rekomendasi didasarkan pada konten dan genre yang sesuai preferensi pengguna.
-- **Tanpa Data Interaksi Pengguna**: Tidak memerlukan riwayat tontonan atau rating dari pengguna.
-- **Cocok untuk Pengguna Baru (Cold Start User)**: Hanya memerlukan informasi konten anime.
-- **Model Prediksi Meningkatkan Kualitas Rekomendasi**: Anime dengan potensi skor tinggi mendapat prioritas.
-
-#### Kekurangan:
-- **Tidak Mempertimbangkan Preferensi Spesifik Pengguna** kecuali diberikan contoh awal.
-- **Cold Start Item**: Masih sulit merekomendasikan anime baru yang tidak memiliki cukup informasi konten.
-- **Bias terhadap Anime Populer**: Jika tidak diseimbangkan, sistem bisa condong ke anime dengan skor tinggi saja.
-
----
-
-
+| Model/Approach                        | Kelebihan                                                                 | Kekurangan                                                  |
+|--------------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------------|
+| Content-Based Filtering                | - Tidak memerlukan data interaksi pengguna<br>- Cocok untuk cold-start user    | - Tidak bisa merekomendasikan anime baru tanpa konten lengkap  |
+| Random Forest Regressor               | - Akurasi tinggi<br>- Stabil dan resisten terhadap overfitting              | - Rentan terhadap noise jika tidak diproses dengan benar      |
+| KNN                                  | - Sederhana<br>- Mudah dipahami                                            | - Sensitif terhadap skala data<br>- Lambat pada dataset besar |
+| Gabungan CBF + Prediksi Skor         | - Meningkatkan personalisasi rekomendasi                                   | - Lebih kompleks                                             |
 
 
 ## Evaluation
@@ -607,56 +596,6 @@ Tiga model pembelajaran mesin diuji coba untuk memprediksi skor anime berdasarka
 - R² score Random Forest mendekati 1 → model ini mampu menjelaskan hampir seluruh variasi data.
 - Hal ini membuktikan bahwa Random Forest sangat layak digunakan dalam sistem rekomendasi.
 
----
-
-##  Hasil Rekomendasi
-Berikut adalah hasil rekomendasi berbasis konten (*content-based filtering*) menggunakan cosine similarity untuk judul `"Naruto"`:
-
-| No | Judul Anime                                      | Score  | Genres                                | Similarity |
-|----|--------------------------------------------------|--------|----------------------------------------|------------|
-| 1  | Naruto: Shippuden                               | 8.26   | Action, Adventure, Fantasy              | 0.9826     |
-| 2  | Boruto: Naruto Next Generations                  | 6.06   | Action, Adventure, Fantasy              | 0.9767     |
-| 3  | One Piece                                       | 8.69   | Action, Adventure, Fantasy              | 0.9708     |
-| 4  | Hunter x Hunter (2011)                           | 9.04   | Action, Adventure, Fantasy              | 0.9708     |
-| 5  | Nanatsu no Taizai                                 | 7.67   | Action, Adventure, Fantasy              | 0.9707     |
-| 6  | Bleach                                          | 7.92   | Action, Adventure, Fantasy              | 0.9703     |
-| 7  | Nanatsu no Taizai: Imashime no Fukkatsu         | 7.59   | Action, Adventure, Fantasy              | 0.9698     |
-| 8  | Fairy Tail                                     | 7.57   | Action, Adventure, Fantasy              | 0.9695     |
-| 9  | Dungeon ni Deai wo Motomeru no wa Machigatteiru… | 7.55   | Action, Adventure, Fantasy              | 0.9692     |
-| 10 | Log Horizon                                      | 7.93   | Action, Adventure, Fantasy              | 0.9682     |
-
->  *Keterangan*:  
-- **Score**: Skor rata-rata dari komunitas MyAnimeList.
-- **Genres**: Genre utama dari anime tersebut.
-- **Similarity**: Nilai kemiripan konten terhadap *"Naruto"* menggunakan metrik *cosine similarity* (semakin mendekati 1, semakin mirip).
-
----
-
-#### **Analisis Hasil Rekomendasi**
-
-Hasil menunjukkan bahwa:
-- **Top rekomendasi** adalah *Naruto: Shippuden*, sebagai lanjutan langsung dari seri utama, memiliki genre dan alur cerita sangat serupa.
-- **One Piece**, **Hunter x Hunter (2011)**, dan **Bleach** juga masuk dalam daftar karena kesamaan genre seperti *Action*, *Adventure*, dan *Fantasy*.
-- Semua anime dalam daftar memiliki elemen aksi dan petualangan, menjadikannya relevan secara kontekstual untuk penggemar *Naruto*.
-- Meskipun beberapa anime memiliki skor lebih tinggi dari *Naruto*, sistem berhasil merekomendasikan anime yang benar-benar sesuai preferensi genre dan tema.
-
----
-
-#### **Keunggulan Sistem Rekomendasi**
-- Berbasis konten, sehingga tidak memerlukan data interaksi pengguna.
-- Menggunakan kombinasi fitur seperti genre, deskripsi, dan metadata untuk meningkatkan akurasi rekomendasi.
-- Dapat memberikan rekomendasi yang personal dan relevan hanya berdasarkan satu judul input.
-
----
-
-### **Kelebihan dan Kekurangan Pendekatan yang Dipilih**
-
-| Model/Approach                        | Kelebihan                                                                 | Kekurangan                                                  |
-|--------------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------------|
-| Content-Based Filtering                | - Tidak memerlukan data interaksi pengguna<br>- Cocok untuk cold-start user    | - Tidak bisa merekomendasikan anime baru tanpa konten lengkap  |
-| Random Forest Regressor               | - Akurasi tinggi<br>- Stabil dan resisten terhadap overfitting              | - Rentan terhadap noise jika tidak diproses dengan benar      |
-| KNN                                  | - Sederhana<br>- Mudah dipahami                                            | - Sensitif terhadap skala data<br>- Lambat pada dataset besar |
-| Gabungan CBF + Prediksi Skor         | - Meningkatkan personalisasi rekomendasi                                   | - Lebih kompleks                                             |
 
 
 ## Kesimpulan
