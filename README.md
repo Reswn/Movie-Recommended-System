@@ -554,19 +554,17 @@ Hasil menunjukkan bahwa:
 
 Pada tahap ini dilakukan evaluasi terhadap model sistem rekomendasi yang telah dibangun. Evaluasi bertujuan untuk memastikan bahwa rekomendasi yang diberikan relevan dan sesuai dengan preferensi pengguna. Berikut adalah metrik evaluasi yang digunakan serta hasil yang dicapai:
 
-### Metrik Evaluasi
+### 1. Metrik Evaluasi
 
-#### 1. **RMSE (Root Mean Squared Error)**
+#### a. **RMSE (Root Mean Squared Error)**
 - Digunakan untuk mengevaluasi akurasi model regresi yang memprediksi skor anime.
 - Semakin rendah nilai RMSE, semakin baik prediksi dari model tersebut.
 
 ### Rumus:
 
-$$
-\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
-$$
+RMSE = sqrt((1/n) * Σ (yᵢ - ŷᵢ)²)
 
-### Keterangan:
+#### Keterangan:
 - $n$: Jumlah total data/pengamatan  
 - $y_i$: Nilai aktual (ground truth) pada data ke-$i$  
 - $\hat{y}_i$: Nilai prediksi dari model pada data ke-$i$  
@@ -575,11 +573,11 @@ $$
 - Semakin kecil nilai RMSE, semakin akurat model dalam melakukan prediksi.
 
 
-#### 2. **R² Score (Koefisien Determinasi)**
+#### b. **R² Score (Koefisien Determinasi)**
 - Mengukur seberapa besar variasi target (`Score`) dapat dijelaskan oleh model.
 - Nilainya berkisar antara 0 hingga 1, dimana semakin mendekati 1 menunjukkan kemampuan model menjelaskan data semakin tinggi.
 
-Rumus:
+#### Rumus:
 
 $$
 R^2 = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}
@@ -595,7 +593,7 @@ $$
 - Penyebut ($\sum (y_i - \bar{y})^2$) adalah total variasi data aktual terhadap rata-rata (Total Sum of Squares, TSS)
 - Nilai $R^2$ berkisar antara 0 sampai 1, semakin mendekati 1 menunjukkan model semakin baik dalam menjelaskan variabilitas data
 
-### Hasil Evaluasi Model Regresi
+### 2. Hasil Evaluasi Model Regresi
 
 Tiga model pembelajaran mesin diuji coba untuk memprediksi skor anime berdasarkan fitur konten:
 
@@ -605,16 +603,16 @@ Tiga model pembelajaran mesin diuji coba untuk memprediksi skor anime berdasarka
 | Random Forest Regressor  | **0.0096**  | **0.9999** |
 | Gradient Boosting Regressor | 0.0113    | 0.9998     |
 
-### Interpretasi:
+#### Interpretasi:
 - **Random Forest Regressor** memberikan performa terbaik dengan **RMSE = 0.0096** dan **R² = 0.9999**, menunjukkan bahwa model ini mampu memprediksi skor anime secara sangat akurat.
 - **Gradient Boosting Regressor** juga menunjukkan kinerja yang sangat baik, hanya sedikit di bawah Random Forest.
 - **KNN** memiliki performa paling rendah karena sensitivitas pada skala data dan kurang efektif pada dataset sparse.
 
 ---
 
-## Visualisasi Hasil Evaluasi
+## 3. Visualisasi Hasil Evaluasi
 
-### 1. **Bar Chart: RMSE per Model**
+### 3.1 **Bar Chart: RMSE per Model**
 
 ![RMSE per Model](https://github.com/Reswn/Anime-Recomendation-System/blob/main/src/Metriks%20Evaluasi.png)
 
@@ -624,7 +622,7 @@ Tiga model pembelajaran mesin diuji coba untuk memprediksi skor anime berdasarka
 
 ---
 
-### 2. **Bar Chart: R² Score per Model**
+### 3.2 **Bar Chart: R² Score per Model**
 
 ![R² Score per Model](https://github.com/Reswn/Anime-Recomendation-System/blob/main/src/R2%20Score.png)
 
@@ -634,7 +632,7 @@ Tiga model pembelajaran mesin diuji coba untuk memprediksi skor anime berdasarka
 
 ---
 
-## Kesimpulan
+### Kesimpulan
 
 Berdasarkan evaluasi menggunakan **RMSE** dan **R² Score**, serta validasi manual rekomendasi:
 
