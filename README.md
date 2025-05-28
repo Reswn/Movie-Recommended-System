@@ -23,7 +23,7 @@ Situasi ini menciptakan urgensi tinggi bagi platform untuk mengembangkan sistem 
 
 ### Goals
 - Membangun sistem rekomendasi yang dapat memberikan saran anime yang relevan berdasarkan data preferensi pengguna.
-- Meningkatkan akurasi dan personalisasi rekomendasi dengan menerapkan algoritma seperti Random Forest, KNN, dan Gradient Boosting.
+- Meningkatkan akurasi dan personalisasi rekomendasi dengan menerapkan algoritma terbaik diantara Random Forest, KNN, dan Gradient Boosting.
 - Mengintegrasikan pendekatan content-based filtering untuk menghasilkan rekomendasi yang lebih kontekstual dan adaptif terhadap profil pengguna.
 
 
