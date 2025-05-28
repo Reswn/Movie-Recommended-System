@@ -334,14 +334,18 @@ Setiap anime direpresentasikan sebagai vektor gabungan dari:
 #### Metrik Kemiripan: Cosine Similarity  
 Digunakan untuk mengukur kedekatan antara dua anime dalam ruang fitur. Nilainya berkisar antara 0 hingga 1, di mana semakin tinggi nilainya, semakin mirip dua anime tersebut.
 
-> Rumus:  
+> Rumus:
 $$
 \text{Cosine Similarity} = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}
 $$
 
+#### Keterangan:
 - $ \mathbf{A}, \mathbf{B} $: Vektor fitur dari dua anime
-- $ \cdot $: Dot product antara vektor
-- $ \|\mathbf{A}\|, \|\mathbf{B}\| $: Magnitudo vektor
+- $ \cdot $: Operasi *dot product* antara vektor A dan B
+- $ \|\mathbf{A}\|, \|\mathbf{B}\| $: Magnitudo (panjang) dari masing-masing vektor
+
+---
+
 
 #### Contoh Output Rekomendasi  
 Misalnya, pengguna menyukai anime *"Naruto"*, maka sistem memberikan rekomendasi Top-5 anime berikut:
