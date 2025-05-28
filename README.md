@@ -47,7 +47,7 @@ Representasi vektor dari fitur konten seperti deskripsi dan genre digunakan untu
 
 ### 3. Eksperimen Penggabungan Fitur
 
-Untuk meningkatkan akurasi rekomendasi, berbagai jenis fitur — seperti vektor TF-IDF deskripsi, encoding genre, dan skor popularitas/rating — digabungkan menggunakan operasi *concatenation* pada *sparse matrix*. Kombinasi fitur ini memberikan representasi yang lebih kaya dan informatif, sehingga perhitungan kemiripan menjadi lebih presisi.
+Untuk meningkatkan akurasi rekomendasi, berbagai jenis fitur — seperti vektor TF-IDF deskripsi, encoding genre, dan skor popularitas/rating — digabungkan Kombinasi fitur ini untuk memberikan representasi yang lebih kaya dan informatif, sehingga perhitungan kemiripan menjadi lebih presisi.
 
 ### 4. Model Prediksi dan Sistem Top-N Recommendation
 
