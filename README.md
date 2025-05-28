@@ -11,8 +11,9 @@ Referensi:
 
 
 ## Business Understanding
+Di tengah pertumbuhan pesat industri hiburan digital, khususnya anime, platform penyedia layanan tontonan menghadapi tantangan besar dalam mempertahankan pengalaman pengguna yang personal dan memuaskan. Ribuan judul anime dengan berbagai genre dirilis setiap tahunnya, menyebabkan pengguna kesulitan untuk menemukan tontonan yang benar-benar sesuai dengan preferensi mereka. Ketidaktepatan dalam memberikan rekomendasi tidak hanya menurunkan kepuasan pengguna, tetapi juga berpotensi menurunkan loyalitas dan retensi pengguna terhadap platform tersebut.
 
-Dalam era digital saat ini, jumlah konten hiburan seperti anime terus mengalami peningkatan yang signifikan. Platform penyedia layanan tontonan bersaing dalam menawarkan pengalaman pengguna yang lebih personal melalui sistem rekomendasi. Namun, dengan ribuan judul dan beragam genre yang tersedia, pengguna seringkali mengalami kesulitan dalam memilih anime yang sesuai dengan preferensi mereka. Hal ini menciptakan kebutuhan mendesak akan sistem rekomendasi yang cerdas, yang tidak hanya menghemat waktu pengguna dalam pencarian konten, tetapi juga mampu meningkatkan kepuasan dan loyalitas mereka terhadap platform. Urgensi pengembangan sistem rekomendasi ini juga didorong oleh meningkatnya ekspektasi pengguna terhadap personalisasi layanan digital.
+Situasi ini menciptakan urgensi tinggi bagi platform untuk mengembangkan sistem rekomendasi yang lebih cerdas dan kontekstual. Sistem seperti ini tidak hanya menyederhanakan proses pencarian konten, tetapi juga secara langsung mendukung strategi bisnis utama, yaitu mempertahankan pengguna, meningkatkan engagement, dan memaksimalkan waktu tayang per pengguna. Pengembangan sistem rekomendasi yang akurat dan adaptif telah menjadi kebutuhan strategis, bukan lagi fitur tambahan.
 
 ### Problem Statements
 
@@ -26,7 +27,7 @@ Dalam era digital saat ini, jumlah konten hiburan seperti anime terus mengalami 
 - Mengintegrasikan pendekatan content-based filtering untuk menghasilkan rekomendasi yang lebih kontekstual dan adaptif terhadap profil pengguna.
 
 
- ## **Solution statements**
+## **Solution Approach**
 Untuk mencapai tujuan proyek dalam memberikan rekomendasi anime yang sesuai dengan preferensi pengguna, berikut beberapa pendekatan teknis dan algoritmik yang diterapkan:
 
 ### 1. Eksplorasi dan Pra-pemrosesan Data**
@@ -624,24 +625,7 @@ Tiga model pembelajaran mesin diuji coba untuk memprediksi skor anime berdasarka
 
 ---
 
-##  Analisis Manual Rekomendasi
-
-Contoh rekomendasi untuk judul *"Naruto"*:
-
-| Peringkat | Judul Anime           | Alasan Rekomendasi                                      |
-|-----------|------------------------|----------------------------------------------------------|
-| 1         | Naruto Shippuden       | Lanjutan langsung dari seri utama                       |
-| 2         | Fullmetal Alchemist    | Genre Action & Adventure yang serupa                      |
-| 3         | Bleach                 | Tema action dan dunia supranatural                       |
-| 4         | One Piece              | Petualangan epik dengan alur menarik                     |
-| 5         | My Hero Academia       | Genre superhero dan populer di kalangan remaja            |
-
-#### Interpretasi:
-- Semua rekomendasi memiliki genre dominan seperti *Action*, *Adventure*, atau *Fantasy* — sama seperti "Naruto".
-- Rekomendasi relevan secara kontekstual dan sesuai dengan pola konten.
-
----
-##  Analisis Kuantitatif Rekomendasi
+##  Hasil Rekomendasi
 Berikut adalah hasil rekomendasi berbasis konten (*content-based filtering*) menggunakan cosine similarity untuk judul `"Naruto"`:
 
 | No | Judul Anime                                      | Score  | Genres                                | Similarity |
