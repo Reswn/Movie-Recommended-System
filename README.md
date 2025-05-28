@@ -1,80 +1,653 @@
 # Laporan Proyek Machine Learning - RENI KARTIKA SUWANDI
 
 ## Project Overview
+Anime merupakan salah satu bentuk hiburan visual yang sangat populer, terutama di kalangan generasi muda. Kepopulerannya tidak hanya terbatas di Jepang, tetapi juga telah merambah hingga ke berbagai belahan dunia, termasuk Indonesia. Namun, tingginya minat terhadap anime juga membawa tantangan tersendiri, yakni banyaknya jumlah judul dan ragam genre yang membuat pengguna kesulitan memilih tontonan yang sesuai dengan selera mereka. Oleh karena itu, sistem rekomendasi menjadi solusi penting untuk mempermudah pengguna dalam menemukan anime yang relevan dan menarik bagi mereka. Sistem seperti ini bertujuan untuk menyederhanakan proses pencarian dan meningkatkan kepuasan pengguna terhadap platform penyedia layanan tontonan.
 
-Pada bagian ini, Kamu perlu menuliskan latar belakang yang relevan dengan proyek yang diangkat.
+Dalam studi oleh Sitanggang et al. (2023), dijelaskan bahwa sistem rekomendasi anime sangat membantu pengguna untuk menemukan judul yang sesuai dengan preferensi mereka dengan cara memprediksi item yang relevan melalui pendekatan berbasis data seperti Singular Value Decomposition (SVD) dan Cosine Similarity [1]. Hal ini membuktikan bahwa metode sistem rekomendasi telah terbukti mampu meningkatkan pengalaman pengguna secara signifikan. Berdasarkan pemahaman tersebut, proyek ini berfokus pada pembuatan sistem rekomendasi anime yang menggabungkan pendekatan content-based filtering serta algoritma supervised learning seperti K-Nearest Neighbor, Random Forest, dan Gradient Boosting. Sistem ini diharapkan mampu menyajikan rekomendasi anime yang lebih akurat dan personal sesuai dengan karakteristik pengguna.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Jelaskan mengapa dan bagaimana masalah tersebut harus diselesaikan
-- Menyertakan hasil riset terkait atau referensi. Referensi yang diberikan harus berasal dari sumber yang kredibel dan author yang jelas.
-- Format Referensi dapat mengacu pada penulisan sitasi [IEEE](https://journals.ieeeauthorcenter.ieee.org/wp-content/uploads/sites/7/IEEE_Reference_Guide.pdf), [APA](https://www.mendeley.com/guides/apa-citation-guide/) atau secara umum seperti [di sini](https://penerbitdeepublish.com/menulis-buku-membuat-sitasi-dengan-mudah/)
-- Sumber yang bisa digunakan [Scholar](https://scholar.google.com/)
+Referensi:
+[1] A. Sitanggang, A. D. Harahap, A. Karimullah, Y. A. Dewantara, C. Rozikin, “Sistem Rekomendasi Anime Menggunakan Metode Singular Value Decomposition (SVD) dan Cosine Similarity,” Ilmu Komputer, Universitas Singaperbangsa Karawang, 2023.
+
 
 ## Business Understanding
 
-Pada bagian ini, Anda perlu menjelaskan proses klarifikasi masalah.
-
-Bagian laporan ini mencakup:
+Dalam era digital saat ini, jumlah konten hiburan seperti anime terus mengalami peningkatan yang signifikan. Platform penyedia layanan tontonan bersaing dalam menawarkan pengalaman pengguna yang lebih personal melalui sistem rekomendasi. Namun, dengan ribuan judul dan beragam genre yang tersedia, pengguna seringkali mengalami kesulitan dalam memilih anime yang sesuai dengan preferensi mereka. Hal ini menciptakan kebutuhan mendesak akan sistem rekomendasi yang cerdas, yang tidak hanya menghemat waktu pengguna dalam pencarian konten, tetapi juga mampu meningkatkan kepuasan dan loyalitas mereka terhadap platform. Urgensi pengembangan sistem rekomendasi ini juga didorong oleh meningkatnya ekspektasi pengguna terhadap personalisasi layanan digital.
 
 ### Problem Statements
 
-Menjelaskan pernyataan masalah:
-- Pernyataan Masalah 1
-- Pernyataan Masalah 2
-- Pernyataan Masalah n
+- Pengguna kesulitan menemukan anime yang sesuai dengan preferensi mereka karena banyaknya pilihan judul dan genre.
+- Sistem rekomendasi pada beberapa platform belum mampu memberikan saran yang akurat dan relevan terhadap minat pengguna.
+- Kurangnya pemanfaatan algoritma pembelajaran mesin (machine learning) yang lebih canggih dalam sistem rekomendasi.
 
 ### Goals
+- Membangun sistem rekomendasi yang dapat memberikan saran anime yang relevan berdasarkan data preferensi pengguna.
+- Meningkatkan akurasi dan personalisasi rekomendasi dengan menerapkan algoritma seperti Random Forest, KNN, dan Gradient Boosting.
+- Mengintegrasikan pendekatan content-based filtering untuk menghasilkan rekomendasi yang lebih kontekstual dan adaptif terhadap profil pengguna.
 
-Menjelaskan tujuan proyek yang menjawab pernyataan masalah:
-- Jawaban pernyataan masalah 1
-- Jawaban pernyataan masalah 2
-- Jawaban pernyataan masalah n
 
-Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
+ ### Solution statements
+Untuk mencapai tujuan proyek dalam memberikan rekomendasi anime yang sesuai dengan preferensi pengguna, berikut beberapa pendekatan teknis dan algoritmik yang diterapkan:
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Menambahkan bagian “Solution Approach” yang menguraikan cara untuk meraih goals. Bagian ini dibuat dengan ketentuan sebagai berikut: 
+#### 1. Eksplorasi dan Pra-pemrosesan Data
 
-    ### Solution statements
-    - Mengajukan 2 atau lebih solution approach (algoritma atau pendekatan sistem rekomendasi).
+Langkah awal dilakukan eksplorasi data (*Exploratory Data Analysis / EDA*) untuk memahami struktur dataset serta mengidentifikasi pola dan anomali seperti nilai kosong (`NaN`) atau tidak valid pada kolom *Popularity* dan *Rank*. 
+
+Setelah itu, proses pembersihan data dilakukan dengan:
+
+- Menghapus entri yang tidak valid.
+- Melakukan normalisasi skor dan encoding fitur kategorikal seperti genre menggunakan `MultiLabelBinarizer`.
+- Mengubah deskripsi teks anime menjadi representasi numerik melalui `TF-IDF Vectorizer`, agar dapat digunakan dalam pencarian berbasis konten.
+
+#### 2. Sistem Rekomendasi Berbasis Konten (Content-Based Filtering)
+
+Representasi vektor dari fitur konten seperti deskripsi dan genre digunakan untuk menghitung kemiripan antar-anime menggunakan metrik *cosine similarity*. Dengan pendekatan ini, sistem dapat memberikan rekomendasi berdasarkan kedekatan konten dengan anime yang sedang ditinjau atau disukai oleh pengguna.
+
+#### 3. Eksperimen Penggabungan Fitur
+
+Untuk meningkatkan akurasi rekomendasi, berbagai jenis fitur — seperti vektor TF-IDF deskripsi, encoding genre, dan skor popularitas/rating — digabungkan menggunakan operasi *concatenation* pada *sparse matrix*. Kombinasi fitur ini memberikan representasi yang lebih kaya dan informatif, sehingga perhitungan kemiripan menjadi lebih presisi.
+
+#### 4. Model Prediksi dan Sistem Top-N Recommendation
+
+Untuk menghasilkan daftar Top-N anime yang relevan bagi pengguna, beberapa model pembelajaran mesin diuji coba dalam memprediksi skor preferensi pengguna terhadap suatu anime:
+
+- **K-Nearest Neighbors (KNN)**  
+  Digunakan sebagai baseline model. Hasil evaluasi menunjukkan RMSE sebesar 0.5094 dan R² sebesar 0.5267, menandakan performa prediksi yang masih kurang optimal.
+
+- **Random Forest Regressor**  
+  Memberikan hasil yang sangat baik dengan RMSE hanya 0.0018 dan R² mencapai 1.0000, menunjukkan bahwa model ini hampir sempurna dalam memprediksi skor preferensi pengguna.
+
+- **Gradient Boosting Regressor**  
+  Juga memberikan performa tinggi dengan RMSE sebesar 0.0078 dan R² sebesar 0.9999, menjadikannya alternatif kuat selain Random Forest.
+
+#### 5. Evaluasi dan Pemilihan Model Terbaik
+
+Evaluasi model dilakukan melalui dua pendekatan utama:
+
+- **Evaluasi manual**: Memeriksa relevansi hasil rekomendasi berdasarkan genre, deskripsi, dan popularitas anime.
+- **Evaluasi kuantitatif**: Menggunakan metrik RMSE dan R² untuk membandingkan akurasi prediksi model.
+  
+Dari hasil evaluasi tersebut, **Random Forest Regressor** dipilih sebagai model terbaik karena kemampuannya dalam memprediksi skor dengan sangat akurat.
+
+#### Keunggulan Sistem
+
+Sistem rekomendasi ini dirancang dengan prinsip-prinsip berikut:
+
+- **Personalisasi**: Memberikan rekomendasi berdasarkan preferensi individu pengguna.
+- **Akurasi Tinggi**: Menggunakan kombinasi fitur konten dan model regresi prediktif untuk hasil yang presisi.
+- **Evaluasi Komprehensif**: Didukung oleh validasi kuantitatif dan kualitatif untuk memastikan kualitas sistem.
+- **Interpretabilitas**: Dilengkapi visualisasi yang membantu pemahaman dan analisis lebih lanjut.
+
+---
+
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
+### Informasi Dataset
+Metadata Dataset
 
-Selanjutnya, uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
+| **Jenis Informasi**        | **Keterangan**                                                                 |
+|----------------------------|---------------------------------------------------------------------------------|
+| **Title**                  | Anime Dataset 2023                                                             |
+| **Source**                 | [Kaggle](https://www.kaggle.com/datasets/dbdmobile/myanimelist-dataset)        |
+| **Maintainer**             | Sajid                                                                            |
+| **License**                | Database: Open Database, Contents: Database Contents                            |
+| **Visibility**             | Publik                                                                           |
+| **Tags**                   | Arts and Entertainment, Movies and TV Shows, Anime and Manga, Popular Culture, Japan |
+| **Usability Score**        | 10.00 / 10                                                                       |
 
-Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-- accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-- cuisine : merupakan jenis masakan yang disajikan pada restoran.
-- dst
+### Struktur Data
+Dataset terdiri dari informasi lengkap mengenai berbagai judul anime, termasuk detail genre, deskripsi, skor rating, popularitas, dan metadata lainnya. Dengan data ini, sistem rekomendasi dapat dibangun menggunakan pendekatan *content-based filtering* untuk memberikan saran anime sesuai preferensi pengguna.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data beserta insight atau exploratory data analysis.
+---
+## Exploratory Data Analysis
+### 5 Baris Pertama Dataset
 
+Berikut merupakan tampilan lima baris pertama dari dataset anime yang digunakan dalam proyek ini:
+
+| anime_id | Name                                 | English name                 | Other name                                    | Score | Genres                                       | Synopsis                                                                 | Type  | Episodes | Aired                            | Studios        | Source   | Duration          | Rating                       | Rank   | Popularity | Favorites | Scored By | Members  | Image URL                                      |
+|----------|--------------------------------------|------------------------------|---------------------------------------------|-------|--------------------------------------------|--------------------------------------------------------------------------|-------|----------|----------------------------------|----------------|----------|-------------------|------------------------------|--------|------------|-----------|-----------|----------|------------------------------------------------|
+| 1        | Cowboy Bebop                         | Cowboy Bebop                 | カウボーイビバップ                           | 8.75  | Action, Award Winning, Sci-Fi              | Crime is timeless...                                                   | TV    | 26         | Apr 3, 1998 to Apr 24, 1999     | Sunrise        | Original | 24 min per ep     | R - 17+                        | 41.0   | 43         | 78525     | 914193.0  | 1771505  | https://cdn.myanimelist.net/images/anime/4/196...  |
+| 5        | Cowboy Bebop: Tengoku no Tobira      | Cowboy Bebop: The Movie      | カウボーイビバップ 天国の扉                  | 8.38  | Action, Sci-Fi                             | Another day, another bounty...                                         | Movie | 1          | Sep 1, 2001                     | Bones          | Original | 1 hr 55 min       | R - 17+                        | 189.0  | 602        | 1448      | 206248.0  | 360978   | https://cdn.myanimelist.net/images/anime/1439/... |
+| 6        | Trigun                               | Trigun                       | トライガン                                   | 8.22  | Action, Adventure, Sci-Fi                  | Vash the Stampede is the man with a $60,000,000 bounty...              | TV    | 26         | Apr 1, 1998 to Sep 30, 1998     | Madhouse       | Manga    | 24 min per ep     | PG-13                          | 328.0  | 246        | 15035     | 356739.0  | 727252   | https://cdn.myanimelist.net/images/anime/7/203...  |
+| 7        | Witch Hunter Robin                   | Witch Hunter Robin           | Witch Hunter ROBIN (ウイッチハンターロビン) | 7.25  | Action, Drama, Mystery, Supernatural       | Robin Sena is a powerful craft user drafted into an agency...          | TV    | 26         | Jul 3, 2002 to Dec 25, 2002     | Sunrise        | Original | 25 min per ep     | PG-13                          | 2764.0 | 1795       | 613       | 42829.0   | 111931   | https://cdn.myanimelist.net/images/anime/10/19...  |
+| 8        | Bouken Ou Beet                       | Beet the Vandel Buster       | 冒険王ビィト                                 | 6.94  | Adventure, Fantasy, Supernatural           | It is the dark century and the people are suffering under darkness...  | TV    | 52         | Sep 30, 2004 to Sep 29, 2005    | Toei Animation | Manga    | 23 min per ep     | PG - Children                    | 4240.0 | 5126       | 14        | 6413.0    | 15001    | https://cdn.myanimelist.net/images/anime/7/215...  |
+**Catatan**: Setiap baris merepresentasikan informasi tentang satu judul anime, mulai dari nama, genre, deskripsi, hingga metadata seperti studio dan durasi.
+
+
+
+## Variabel Dataset Anime Recommendation
+
+Dataset ini berisi informasi lengkap mengenai berbagai judul anime, termasuk deskripsi, genre, popularitas, rating, dan metadata lainnya yang relevan untuk membangun sistem rekomendasi berbasis konten (*content-based filtering*). Berikut adalah deskripsi masing-masing variabel:
+
+| Nama Variabel         | Deskripsi                                                                                             |
+|-----------------------|--------------------------------------------------------------------------------------------------------|
+| `anime_id`            | ID unik untuk setiap judul anime.                                                                     |
+| `Name`                | Judul utama dari anime dalam bahasa Jepang atau bahasa asli.                                          |
+| `English name`        | Judul alternatif dalam bahasa Inggris (jika tersedia).                                                |
+| `Other name`          | Judul lain dari anime, seperti versi terjemahan atau nama lokal di negara lain.                      |
+| `Score`               | Skor rata-rata yang diberikan oleh pengguna MyAnimeList (skala 1–10).                                 |
+| `Genres`              | Genre dari anime, seperti Action, Adventure, Romance, dll. Bisa lebih dari satu genre per judul.     |
+| `Synopsis`            | Ringkasan cerita dari anime, digunakan sebagai fitur teks untuk sistem pencarian berbasis konten.    |
+| `Type`                | Jenis konten anime, misalnya TV, Movie, OVA, Special, dsb.                                           |
+| `Episodes`            | Jumlah episode atau durasi total dari anime (untuk Movie biasanya hanya 1).                           |
+| `Aired`               | Periode kapan anime ditayangkan, mulai dari tanggal awal hingga akhir siaran.                         |
+| `Premiered`           | Musim anime tersebut pertama kali tayang, seperti "Spring 2023", "Fall 2022", dsb.                    |
+| `Status`              | Status penyelesaian anime: Finished Airing, Currently Airing, atau Not Yet Aired.                    |
+| `Producers`           | Studio atau perusahaan yang memproduksi anime.                                                       |
+| `Licensors`           | Pihak yang memiliki hak distribusi resmi atas anime tersebut.                                        |
+| `Studios`             | Studio animasi yang bertanggung jawab atas produksi anime.                                           |
+| `Source`              | Sumber asal cerita anime, seperti Manga, Light Novel, Game, dsb.                                     |
+| `Duration`            | Durasi rata-rata tiap episode atau total durasi untuk Movie.                                         |
+| `Rating`              | Klasifikasi usia penonton, seperti "R - 17+", "PG-13", atau "G - All Ages".                           |
+| `Rank`                | Peringkat anime berdasarkan skor dan popularitas relatif terhadap anime lainnya.                     |
+| `Popularity`          | Indeks popularitas anime; semakin rendah angka, semakin populer anime tersebut.                      |
+| `Favorites`           | Jumlah pengguna yang menambahkan anime ke daftar favorit mereka.                                     |
+| `Scored By`           | Jumlah pengguna yang memberikan rating pada anime tersebut.                                          |
+| `Members`             | Jumlah pengguna yang memiliki anime ini di daftar mereka.                                            |
+| `Image URL`           | Tautan gambar sampul/resmi anime dari sumber MyAnimeList.                                            |
+
+> Catatan: Seluruh data bersifat informatif dan dapat digunakan untuk membangun model rekomendasi yang personal sesuai preferensi pengguna.
+
+---
+
+## Ringkasan Informasi Dataset
+
+Dataset yang digunakan dalam proyek sistem rekomendasi anime ini memiliki struktur sebagai berikut:
+
+### Ukuran Dataset:
+- **Jumlah Baris**: 24.905 entri anime
+- **Jumlah Kolom**: 24 kolom (variabel)
+
+### Tipe Data:
+- **Fitur Numerik (`int64`) → 4 kolom**:
+  - `anime_id`, `Popularity`, `Favorites`, `Members`
+- **Fitur Teksual/Kategorikal (`object`) → 20 kolom**:
+  - `Name`, `English name`, `Other name`, `Score`, `Genres`, `Synopsis`, `Type`, `Episodes`, `Aired`, `Premiered`, `Status`, `Producers`, `Licensors`, `Studios`, `Source`, `Duration`, `Rating`, `Rank`, `Scored By`, `Image URL`
+
+### Target Variabel:
+Tidak ada target eksplisit seperti dalam kasus regresi atau klasifikasi, karena ini adalah proyek sistem rekomendasi. Namun, beberapa fitur penting yang digunakan untuk rekomendasi antara lain:
+- `Genres`: Digunakan untuk encoding dan representasi vektor genre.
+- `Synopsis`: Diubah menjadi vektor numerik dengan TF-IDF untuk pencarian berbasis konten.
+- `Score`, `Rank`, `Popularity`: Digunakan sebagai indikator kualitas dan popularitas anime.
+
+### Ciri Statistik dan Distribusi Data:
+- Semua kolom **tidak memiliki missing values**, sehingga tidak memerlukan imputasi.
+- Beberapa kolom numerik seperti `Score`, `Episodes`, `Rank`, dan `Scored By` saat ini masih bertipe `object` dan perlu dikonversi ke tipe numerik sebelum analisis lanjutan.
+- Dataset mencakup variasi besar jenis anime, dari anime populer dengan skor tinggi hingga yang kurang dikenal.
+- Terdapat potensi outlier pada kolom `Favorites` dan `Members` karena perbedaan jumlah yang signifikan antar-anime.
+- Fitur teks seperti `Synopsis` dan `Genres` membutuhkan proses preprocessing seperti tokenisasi, stopword removal, dan vectorization agar dapat digunakan dalam model rekomendasi.
+
+### Visualisasi Genre
+
+#### 1. Top 15 Anime Genres
+
+Salah satu aspek penting dalam analisis dataset anime adalah memahami distribusi genre yang paling umum di antara judul-judul anime. Berikut adalah visualisasi frekuensi genre anime teratas berdasarkan dataset:
+
+![Top 15 Anime Genres](attachment://Top_15_Anime_Genres.png)
+
+#### Insight Utama:
+- **Genre Terpopuler**: Genre `Comedy` memiliki frekuensi tertinggi dengan lebih dari 7.000 entri, menjadikannya genre anime paling banyak digunakan dalam dataset.
+- **Kedua dan Ketiga**: Genre `Fantasy` dan `UNKNOWN` mengikuti genre `Comedy` dengan frekuensi masing-masing sekitar 5.200 dan 4.900.
+- **Genre Klasik**: Genre seperti `Action`, `Adventure`, dan `Sci-Fi` juga sangat populer, dengan frekuensi masing-masing sekitar 3.800–4.800.
+- **Genre Minor**: Beberapa genre seperti `Sports`, `Avant Garde`, dan `Ecchi` memiliki frekuensi yang lebih rendah, menunjukkan bahwa mereka kurang umum dibandingkan genre utama.
+
+#### 2. Analisis Popularitas
+![Top 15 Anime Genres](attachment://Top_15_Anime_Genres.png)
+#### Insight Utama:
+- **Shingeki no Kyojin** menjadi anime paling populer dengan `Popularity = 1`.
+- Genre utama dari anime-anime ini umumnya adalah **Action**, **Adventure**, dan **Fantasy**, menunjukkan bahwa genre tersebut sangat diminati oleh komunitas MyAnimeList.
+- Beberapa judul legendaris seperti **Naruto** dan **Death Note** masih memiliki posisi tinggi meskipun sudah lama dirilis, membuktikan daya tarik jangka panjang dari anime berkualitas tinggi.
+
+#### 3. Analisis Top 10 Anime dengan Rank Tertinggi
+![Top 15 Anime Genres](attachment://Top_15_Anime_Genres.png)
+#### Insight Utama:
+- **Fullmetal Alchemist: Brotherhood** menduduki peringkat pertama dengan skor rata-rata hampir sempurna (>9.15), menjadikannya salah satu anime paling dikagumi di komunitas.
+- Serial **Gintama** muncul dalam beberapa versi, menunjukkan bahwa franchise ini tidak hanya populer tetapi juga konsisten menghasilkan kualitas cerita yang baik.
+- **Hunter x Hunter (2011)** berada di peringkat 10, meskipun sering dianggap sebagai salah satu anime dengan cerita paling kompleks dan strategis.
+
+#### 4. Distribusi Data Popularity vs Rank
+![Top 15 Anime Genres](attachment://Top_15_Anime_Genres.png)
+
+##### Insight Utama dari Scatter Plot Popularity vs. Rank
+
+1. **Hubungan Popularity dan Rank**  
+   - Anime dengan **popularitas tinggi** (angka besar) biasanya memiliki **peringkat rendah** (angka kecil), dan sebaliknya.
+   - Ini menunjukkan bahwa anime populer cenderung mendapat peringkat lebih baik karena banyak pengguna yang menilainya.
+
+2. **Distribusi Data**
+   - Sebagian besar anime berada di area **kiri bawah grafik**, artinya mereka memiliki **popularitas rendah hingga sedang** dan **peringkat moderat hingga tinggi**.
+   - Hanya sedikit anime yang sangat **populer dan berperingkat tinggi**, sehingga area **kanan atas** tampak jarang.
+
+3. **Outlier**
+   - Beberapa anime **tidak mengikuti pola umum**, misalnya:
+     - Populer rendah tapi peringkat tinggi → anime berkualitas tetapi belum terlalu dikenal.
+     - Populer tinggi tapi peringkat rendah → anime populer tetapi mungkin kontroversial atau tidak dinilai maksimal oleh penggemar.
+
+---
+
+## Interpretasi untuk Sistem Rekomendasi
+- Menggunakan **popularitas** sebagai faktor awal rekomendasi untuk pengguna baru, karena anime populer cenderung aman dan diminati banyak orang.
+- Menggabungkan dengan **peringkat** untuk memastikan kualitas anime tetap terjaga dan sesuai preferensi pengguna.
+- Anime dengan **peringkat tinggi tapi popularitas rendah** bisa direkomendasikan untuk pengguna yang ingin menjelajahi judul unik atau niche.
+
+--- 
+
+
+---
 ## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+Pada tahap ini, data dipersiapkan agar siap digunakan dalam proses pembangunan sistem rekomendasi berbasis konten (content-based filtering ). Tujuan dari data preparation adalah memastikan data bersih, konsisten, dan dalam format yang tepat sehingga dapat memberikan rekomendasi yang relevan dan akurat bagi pengguna. Berikut adalah langkah-langkah yang dilakukan:
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+### 1. Pembersihan Data
 
-## Modeling
-Tahapan ini membahas mengenai model sisten rekomendasi yang Anda buat untuk menyelesaikan permasalahan. Sajikan top-N recommendation sebagai output.
+#### Missing Values  
+Dataset secara umum tidak memiliki nilai kosong pada fitur penting seperti `Genres`, `Synopsis`, dan `Score`. Meskipun demikian, beberapa kolom seperti `English name` dan `Other name` memiliki entri yang bernilai `NaN`. Untuk mengatasi hal ini:
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menyajikan dua solusi rekomendasi dengan algoritma yang berbeda.
-- Menjelaskan kelebihan dan kekurangan dari solusi/pendekatan yang dipilih.
+- Fitur penting yang memiliki nilai kosong dihapus barisnya agar tidak mengganggu proses selanjutnya.
+- Kolom non-kritis yang memiliki nilai `NaN` diisi dengan placeholder seperti `'Unknown'` agar tetap bisa diproses tanpa kehilangan data penting.
+
+#### Duplikasi Data  
+Tidak ditemukan baris duplikat dalam dataset, sehingga tidak diperlukan penghapusan data redundan.
+
+#### Konsistensi Tipe Data  
+Beberapa fitur numerik seperti `Score`, `Episodes`, dan `Rank` awalnya bertipe teks (`object`). Kolom-kolom tersebut dikonversi menjadi tipe numerik agar bisa digunakan dalam perhitungan statistik dan model rekomendasi.
+
+---
+
+### 2. Normalisasi dan Pemrosesan Teks
+
+#### Lowercasing  
+Untuk memastikan keseragaman teks, seluruh isi kolom `Genres` dan `Synopsis` diubah menjadi huruf kecil (*lowercase*), sehingga kata seperti "Action" dan "action" dianggap sebagai satu entitas yang sama.
+
+#### Split Genre  
+Genre anime yang awalnya berbentuk string terpisah koma diubah menjadi list agar siap untuk encoding lebih lanjut.
+
+#### Pembersihan Synopsis  
+Deskripsi anime pada kolom `Synopsis` dibersihkan dari karakter non-alfabet dan angka untuk memperjelas fokus pada kata-kata penting.
+
+---
+
+### 3. Vektorisasi Fitur Teksual
+
+#### TF-IDF untuk Synopsis  
+Deskripsi anime diubah menjadi representasi vektor menggunakan metode **TF-IDF (Term Frequency - Inverse Document Frequency)**. Representasi ini memungkinkan sistem mengukur kemiripan antar-anime berdasarkan deskripsinya.
+
+#### Encoding Genre  
+Genre yang berupa list dari masing-masing judul anime diubah menjadi bentuk biner menggunakan teknik **MultiLabelBinarizer**, sehingga dapat digunakan dalam perhitungan kemiripan konten.
+
+---
+
+### 4. Encoding Fitur Kategorikal
+
+Fitur kategorikal seperti `Type` dan `Rating` diubah menjadi bentuk numerik menggunakan teknik encoding agar dapat dimasukkan ke dalam model machine learning.
+
+---
+
+### 5. Normalisasi Fitur Numerik
+
+Beberapa fitur numerik seperti `Score` dan `Members` dinormalisasi ke rentang [0, 1] agar semua fitur memiliki bobot yang seimbang saat digabungkan dalam model.
+
+---
+
+### 6. Gabung Semua Fitur
+
+Seluruh fitur yang telah diproses — termasuk genre, deskripsi, tipe, rating, serta skor dan jumlah penggemar — digabung menjadi satu matriks fitur final. Matriks ini akan menjadi dasar untuk menghitung kemiripan antar-anime menggunakan metrik seperti *cosine similarity*.
+
+---
+
+### 7. Pembagian Data Latih dan Uji (Opsional)
+
+Jika sistem rekomendasi dikembangkan lebih jauh dengan pendekatan prediktif (misalnya regresi untuk memprediksi skor anime), maka data dibagi menjadi dua bagian:
+
+- **80% untuk pelatihan model**
+- **20% untuk evaluasi dan validasi**
+
+Teknik ini membantu mengevaluasi performa model secara objektif.
+
+---
+
+#### Ringkasan Tahapan
+
+| No | Langkah                        | Tujuan Utama                                                                 |
+|----|----------------------------------|------------------------------------------------------------------------------|
+| 1  | Pembersihan Data                | Menjamin kualitas dan validitas data                                         |
+| 2  | Normalisasi Teks                | Membersihkan dan seragamkan format teks                                     |
+| 3  | Vektorisasi Teks               | Mengubah deskripsi dan genre menjadi vektor numerik                          |
+| 4  | Encoding Kategorikal             | Merubah fitur kategorikal menjadi bentuk numerik                             |
+| 5  | Normalisasi Numerik             | Menyamakan skala fitur numerik                                              |
+| 6  | Gabung Semua Fitur              | Membentuk feature matrix final untuk model                                    |
+| 7  | Pembagian Data Latih dan Uji   | Menyediakan data pelatihan dan pengujian untuk evaluasi model (opsional)     |
+
+---
+
+
+Pada tahap ini, dibangun sistem rekomendasi berbasis konten (*Content-Based Filtering*) dan diuji coba beberapa model regresi untuk memprediksi skor anime. Tujuan dari tahapan ini adalah menghasilkan **Top-N rekomendasi anime** yang relevan berdasarkan konten dan genre dari judul input.
+
+### 1. Content-Based Filtering dengan Cosine Similarity
+
+#### Deskripsi Pendekatan  
+Sistem rekomendasi berbasis konten bekerja dengan cara merepresentasikan setiap anime sebagai vektor numerik berdasarkan fitur-fitur seperti `Genre`, `Synopsis`, `Type`, `Rating`, dan metadata lainnya. Setelah semua anime direpresentasikan dalam bentuk vektor, dilakukan perhitungan kemiripan menggunakan metrik *cosine similarity*.
+
+Setiap anime direpresentasikan sebagai vektor gabungan dari:
+- Genre (dengan `MultiLabelBinarizer`)
+- Deskripsi (dengan `TF-IDF Vectorizer`)
+- Metadata tambahan seperti `Type`, `Rating`, `Score`, `Members`, dan `Popularity` yang dinormalisasi
+
+#### Metrik Kemiripan: Cosine Similarity  
+Digunakan untuk mengukur kedekatan antara dua anime dalam ruang fitur. Nilainya berkisar antara 0 hingga 1, di mana semakin tinggi nilainya, semakin mirip dua anime tersebut.
+
+> Rumus:  
+$$
+\text{Cosine Similarity} = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}
+$$
+
+- $ \mathbf{A}, \mathbf{B} $: Vektor fitur dari dua anime
+- $ \cdot $: Dot product antara vektor
+- $ \|\mathbf{A}\|, \|\mathbf{B}\| $: Magnitudo vektor
+
+#### Contoh Output Rekomendasi  
+Misalnya, pengguna menyukai anime *"Naruto"*, maka sistem memberikan rekomendasi Top-5 anime berikut:
+
+| Peringkat | Judul Anime           | Alasan Rekomendasi                                      |
+|-----------|------------------------|----------------------------------------------------------|
+| 1         | Naruto Shippuden       | Lanjutan langsung dari seri utama                       |
+| 2         | Fullmetal Alchemist    | Genre Action & Adventure yang serupa                     |
+| 3         | Bleach                 | Tema action dan dunia supranatural                      |
+| 4         | One Piece              | Petualangan epik dengan alur menarik                    |
+| 5         | My Hero Academia        | Genre superhero dengan relevansi tema                     |
+
+---
+
+### 2. K-Nearest Neighbors (KNN) – Baseline Model
+
+Algoritma KNN digunakan sebagai baseline untuk memprediksi skor anime berdasarkan kesamaan dengan anime-anime terdekat.
+
+#### Rumus Jarak (Euclidean Distance)
+Untuk menentukan tetangga terdekat, KNN menggunakan jarak Euclidean:
+
+> Rumus:  
+$$
+\text{Euclidean Distance} = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2 + \dots}
+$$
+
+#### Parameter Utama:
+- `n_neighbors = 5`
+- Menggunakan data gabungan dari matriks fitur (`combined_sparse`) dan skor ternormalisasi
+
+#### Kelebihan:
+- Sederhana dan mudah dipahami.
+- Tidak memerlukan pelatihan kompleks.
+- Cocok untuk dataset yang sudah direpresentasikan secara numerik.
+
+#### Kekurangan:
+- Sensitif terhadap skala data → perlu scaling fitur.
+- Lambat pada dataset besar karena harus menghitung jarak ke semua item.
+- Hasil tidak stabil jika data sedikit atau banyak duplikasi konten.
+
+---
+
+### 3. Random Forest Regressor – Model Terbaik
+
+Random Forest digunakan untuk memprediksi skor anime berdasarkan fitur-fitur konten dan metadata. Sebagai ensemble method, model ini melatih banyak pohon keputusan dan menggabungkan hasilnya untuk meningkatkan stabilitas dan akurasi.
+
+#### Rumus Prediksi (Aggregation of Trees)
+Prediksi akhir diperoleh dari rata-rata hasil dari seluruh pohon:
+
+> Rumus:  
+$$
+\hat{y} = \frac{1}{T} \sum_{t=1}^{T} \hat{y}_t
+$$
+
+- $ T $: jumlah pohon (trees) dalam forest
+- $ \hat{y}_t $: prediksi dari tiap pohon
+
+#### Parameter Utama:
+- `n_estimators = 100`
+- `random_state = 42`
+
+#### Kelebihan:
+- Stabil dan tahan overfitting dibandingkan KNN.
+- Mampu menangkap hubungan non-linear antar fitur.
+- Memberikan performa terbaik dengan RMSE = **0.0096** dan R² = **0.9999**.
+
+#### Kekurangan:
+- Lebih sulit diinterpretasi dibanding model tunggal.
+- Waktu pelatihan lebih lama daripada model sederhana.
+
+---
+
+### 4. Gradient Boosting Regressor – Alternatif Kuat
+
+Gradient Boosting juga digunakan untuk memprediksi skor anime. Teknik ini membangun model secara bertahap dengan fokus pada error dari model sebelumnya.
+
+#### Rumus Pembaruan Model (Boosting Iteratif)
+
+> Rumus:  
+$$
+F_m(x) = F_{m-1}(x) + \eta \cdot h_m(x)
+$$
+
+- $ F_m(x) $: Model pada iterasi ke-m
+- $ \eta $: Learning rate (koefisien pembaruan model)
+- $ h_m(x) $: Weak learner (pohon keputusan) pada iterasi ke-m
+
+#### Parameter Utama:
+- `n_estimators = 100`
+- `random_state = 42`
+
+#### Kelebihan:
+- Sangat akurat dalam memprediksi skor anime.
+- Mampu menangani interaksi antar fitur dengan baik.
+- Performa mendekati Random Forest.
+
+#### Kekurangan:
+- Rentan overfitting jika tidak ditune dengan benar.
+- Memerlukan tuning parameter yang lebih teliti.
+- Waktu pelatihan sedikit lebih lama dari Random Forest.
+
+---
+
+### 5. Evaluasi dan Pemilihan Model Terbaik
+
+Evaluasi dilakukan menggunakan dua metrik utama:
+- **RMSE (Root Mean Squared Error)**: Mengukur kesalahan rata-rata prediksi.
+- **R² Score**: Mengukur seberapa besar variasi target bisa dijelaskan oleh model.
+
+Hasil evaluasi:
+
+| Model                     | RMSE        | R² Score   |
+|--------------------------|-------------|------------|
+| KNN                      | 0.5745      | 0.6118     |
+| Random Forest Regressor  | **0.0096**  | **0.9999** |
+| Gradient Boosting Regressor | 0.0113    | 0.9998     |
+
+#### Interpretasi:
+- **Random Forest Regressor** menjadi model terbaik karena mampu memprediksi skor anime dengan sangat presisi.
+- **Gradient Boosting** juga memberikan hasil yang sangat baik, menjadikannya alternatif yang layak.
+- **KNN** memiliki performa paling rendah, sehingga tidak disarankan sebagai model utama.
+
+---
+
+### 6. Proses Pelatihan dan Prediksi
+
+Langkah-langkah pelatihan model adalah sebagai berikut:
+1. Dataset dibagi menjadi **data latih dan uji** dengan rasio 80:20 menggunakan `train_test_split`.
+2. Fitur gabungan (`combined_sparse`) digunakan sebagai input model.
+3. Target (`y`) berupa kolom `Score` yang sudah dibersihkan dan ternormalisasi.
+4. Setiap model dilatih menggunakan data latih dan dievaluasi pada data uji.
+5. Hasil prediksi digunakan sebagai tambahan bobot dalam proses rekomendasi akhir.
+
+---
+
+### 7. Ringkasan Model dan Tujuan
+
+| No | Algoritma                    | Tujuan                                                                 |
+|----|-------------------------------|--------------------------------------------------------------------------|
+| 1  | Cosine Similarity             | Mencari anime serupa berdasarkan konten dan genre                       |
+| 2  | K-Nearest Neighbors          | Prediksi skor dasar untuk rekomendasi                                  |
+| 3  | Random Forest Regressor       | Prediksi skor dengan akurasi tertinggi                                 |
+| 4  | Gradient Boosting Regressor   | Alternatif prediksi skor yang sangat akurat                             |
+
+---
+
+### 4. Perbandingan Pendekatan
+
+| No | Aspek                        | Content-Based Filtering (CBF) | Regresi + Konten (Hybrid Approach) |
+|----|------------------------------|--------------------------------|-------------------------------------|
+| 1  | **Dasar Rekomendasi**       | Kesamaan konten               | Kesamaan konten + prediksi skor    |
+| 2  | **Kompleksitas Komputasi**  | Rendah                        | Sedikit lebih tinggi                 |
+| 3  | **Personalisasi**           | Baik                          | Lebih baik (dengan prediksi skor)   |
+| 4  | **Cold Start Problem**      | Ada                           | Sebagian tertangani jika ada metadata |
+| 5  | **Kecepatan Respon**        | Cepat                         | Sedikit lebih lambat                 |
+| 6  | **Akurasi Rekomendasi**    | Akurat untuk konten serupa    | Lebih akurat dengan pertimbangan skor |
+
+---
+
+### 5. Kelebihan dan Kekurangan Pendekatan
+
+#### Kelebihan:
+- **Relevansi Tinggi**: Rekomendasi didasarkan pada konten dan genre yang sesuai preferensi pengguna.
+- **Tanpa Data Interaksi Pengguna**: Tidak memerlukan riwayat tontonan atau rating dari pengguna.
+- **Cocok untuk Pengguna Baru (Cold Start User)**: Hanya memerlukan informasi konten anime.
+- **Model Prediksi Meningkatkan Kualitas Rekomendasi**: Anime dengan potensi skor tinggi mendapat prioritas.
+
+#### Kekurangan:
+- **Tidak Mempertimbangkan Preferensi Spesifik Pengguna** kecuali diberikan contoh awal.
+- **Cold Start Item**: Masih sulit merekomendasikan anime baru yang tidak memiliki cukup informasi konten.
+- **Bias terhadap Anime Populer**: Jika tidak diseimbangkan, sistem bisa condong ke anime dengan skor tinggi saja.
+
+---
+
+
+
 
 ## Evaluation
-Pada bagian ini Anda perlu menyebutkan metrik evaluasi yang digunakan. Kemudian, jelaskan hasil proyek berdasarkan metrik evaluasi tersebut.
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+Pada tahap ini dilakukan evaluasi terhadap model sistem rekomendasi yang telah dibangun. Evaluasi bertujuan untuk memastikan bahwa rekomendasi yang diberikan relevan dan sesuai dengan preferensi pengguna. Berikut adalah metrik evaluasi yang digunakan serta hasil yang dicapai:
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+### Metrik Evaluasi
 
-**---Ini adalah bagian akhir laporan---**
+#### 1. **RMSE (Root Mean Squared Error)**
+- Digunakan untuk mengevaluasi akurasi model regresi yang memprediksi skor anime.
+- Semakin rendah nilai RMSE, semakin baik prediksi dari model tersebut.
 
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
+> Rumus:
+$$
+\text{RMSE} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}
+$$
+
+#### 2. **R² Score (Koefisien Determinasi)**
+- Mengukur seberapa besar variasi target (`Score`) dapat dijelaskan oleh model.
+- Nilainya berkisar antara 0 hingga 1, dimana semakin mendekati 1 menunjukkan kemampuan model menjelaskan data semakin tinggi.
+
+> Rumus:
+$$
+R^2 = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}
+$$
+
+#### 3. **Validasi Manual Rekomendasi**
+- Karena tidak ada ground truth eksplisit untuk rekomendasi (tidak ada data interaksi pengguna), dilakukan validasi manual terhadap hasil rekomendasi.
+- Validasi dilakukan dengan melihat apakah anime-anime yang direkomendasikan memiliki genre, deskripsi, dan tema yang serupa dengan anime input.
+
+---
+
+### Hasil Evaluasi Model Regresi
+
+Tiga model pembelajaran mesin diuji coba untuk memprediksi skor anime berdasarkan fitur konten:
+
+| Model                     | RMSE        | R² Score   |
+|--------------------------|-------------|------------|
+| KNN                      | 0.5745      | 0.6118     |
+| Random Forest Regressor  | **0.0096**  | **0.9999** |
+| Gradient Boosting Regressor | 0.0113    | 0.9998     |
+
+### Interpretasi:
+- **Random Forest Regressor** memberikan performa terbaik dengan **RMSE = 0.0096** dan **R² = 0.9999**, menunjukkan bahwa model ini mampu memprediksi skor anime secara sangat akurat.
+- **Gradient Boosting Regressor** juga menunjukkan kinerja yang sangat baik, hanya sedikit di bawah Random Forest.
+- **KNN** memiliki performa paling rendah karena sensitivitas pada skala data dan kurang efektif pada dataset sparse.
+
+---
+
+## 📈 Visualisasi Hasil Evaluasi
+
+### 1. **Bar Chart: RMSE per Model**
+
+![RMSE per Model](attachment://rmse_bar_chart.png)
+
+#### Insight:
+- Random Forest memiliki RMSE terkecil → kesalahan prediksi terendah.
+- KNN memiliki RMSE tertinggi → kurang tepat untuk prediksi skor anime.
+
+---
+
+### 2. **Bar Chart: R² Score per Model**
+
+![R² Score per Model](attachment://r2_score_bar_chart.png)
+
+#### Insight:
+- R² score Random Forest mendekati 1 → model ini mampu menjelaskan hampir seluruh variasi data.
+- Hal ini membuktikan bahwa Random Forest sangat layak digunakan dalam sistem rekomendasi.
+
+---
+
+## 🧠 Analisis Manual Rekomendasi
+
+Contoh rekomendasi untuk judul *"Naruto"*:
+
+| Peringkat | Judul Anime           | Alasan Rekomendasi                                      |
+|-----------|------------------------|----------------------------------------------------------|
+| 1         | Naruto Shippuden       | Lanjutan langsung dari seri utama                       |
+| 2         | Fullmetal Alchemist    | Genre Action & Adventure yang serupa                      |
+| 3         | Bleach                 | Tema action dan dunia supranatural                       |
+| 4         | One Piece              | Petualangan epik dengan alur menarik                     |
+| 5         | My Hero Academia       | Genre superhero dan populer di kalangan remaja            |
+
+#### Interpretasi:
+- Semua rekomendasi memiliki genre dominan seperti *Action*, *Adventure*, atau *Fantasy* — sama seperti "Naruto".
+- Rekomendasi relevan secara kontekstual dan sesuai dengan pola konten.
+
+---
+
+## Kelebihan dan Kekurangan Pendekatan yang Dipilih
+
+| Model/Approach                        | Kelebihan                                                                 | Kekurangan                                                  |
+|--------------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------------|
+| Content-Based Filtering                | - Tidak memerlukan data interaksi pengguna<br>- Cocok untuk cold-start user    | - Tidak bisa merekomendasikan anime baru tanpa konten lengkap  |
+| Random Forest Regressor               | - Akurasi tinggi<br>- Stabil dan resisten terhadap overfitting              | - Rentan terhadap noise jika tidak diproses dengan benar      |
+| KNN                                  | - Sederhana<br>- Mudah dipahami                                            | - Sensitif terhadap skala data<br>- Lambat pada dataset besar |
+| Gabungan CBF + Prediksi Skor         | - Meningkatkan personalisasi rekomendasi                                   | - Lebih kompleks                                             |
+
+---
+
+5. **Implementasi Hybrid Approach (Opsional)**
+   - Jika tersedia data rating pengguna, gabung dengan sistem rekomendasi berbasis konten untuk pendekatan hybrid.
+
+---
+
+## Kesimpulan
+
+Berdasarkan evaluasi menggunakan **RMSE** dan **R² Score**, serta validasi manual rekomendasi:
+
+- **Random Forest Regressor** menjadi model terbaik dengan **RMSE = 0.0096** dan **R² = 0.9999**, menunjukkan bahwa model ini mampu memprediksi skor anime dengan sangat akurat.
+- **Content-Based Filtering** berhasil memberikan rekomendasi berdasarkan kedekatan konten dan genre.
+- Hasil rekomendasi ditingkatkan dengan pendekatan **hybrid**: gabungan antara kemiripan konten dan prediksi skor anime.
+
+Meskipun belum melibatkan data interaksi pengguna, sistem ini sudah cukup kuat untuk digunakan oleh pengguna baru atau sebagai fitur pencarian berbasis konten.
+
+---
+
+
+---
+
+### Referensi
+
+[1] N. M. Roziqiin dan M. Faisal, "Sistem rekomendasi pemilihan anime menggunakan user-based collaborative filtering," *JIPI (Jurnal Ilmiah Penelitian dan Pembelajaran Informatika*, vol. 9, no. 1, 2024. [Online]. Available: https://doi.org/10.29100/jipi.v9i1.4222
+
+[2] GeeksforGeeks, "K-Nearest Neighbor(KNN) Algorithm," 2017. [Online]. Available: https://www.geeksforgeeks.org/k-nearest-neighbours/
+
+[3] GeeksforGeeks, "Random Forest Algorithm in Machine Learning," 2024. [Online]. Available: https://www.geeksforgeeks.org/random-forest-algorithm-in-machine-learning/
+
+[4] GeeksforGeeks, "Gradient Boosting in ML," 2020. [Online]. Available: https://www.geeksforgeeks.org/ml-gradient-boosting/
+
+[5] J.M. Ph.D dan E. Kavlakoglu, "Content-based filtering," IBM, 2024. [Online]. Available: https://www.ibm.com/think/topics/content-based-filtering
+
+---
+
