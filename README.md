@@ -218,85 +218,137 @@ Salah satu aspek penting dalam analisis dataset anime adalah memahami distribusi
 ## Data Preparation
 Pada tahap ini, data dipersiapkan agar siap digunakan dalam proses pembangunan sistem rekomendasi berbasis konten (content-based filtering ). Tujuan dari data preparation adalah memastikan data bersih, konsisten, dan dalam format yang tepat sehingga dapat memberikan rekomendasi yang relevan dan akurat bagi pengguna. Berikut adalah langkah-langkah yang dilakukan:
 
-### 1. Pembersihan Data
+### **1. Pembersihan Data**
+### 1.1 Penanganan Missing Values & Tipe Data  
+Beberapa kolom seperti `Score`, `Episodes`, dan `Scored By` masih berbentuk string (`object`) dan mengandung nilai `'Unknown'`. Untuk memastikan akurasi dan kompatibilitas dalam proses rekomendasi dan prediksi:
 
-#### 1.1 Missing Values  
-Dataset secara umum tidak memiliki nilai kosong pada fitur penting seperti `Genres`, `Synopsis`, dan `Score`. Meskipun demikian, beberapa kolom seperti `English name` dan `Other name` memiliki entri yang bernilai `NaN`. Untuk mengatasi hal ini:
+- Nilai `'Unknown'` diubah menjadi `NaN`, lalu dikonversi ke tipe numerik menggunakan `pd.to_numeric`.
+- Baris dengan missing values pada fitur penting (`Genres`, `Score`, dan `Synopsis`) dihapus karena informasi ini merupakan dasar dari sistem rekomendasi.
+- Index data direset agar urut dan mudah digunakan dalam pemrosesan selanjutnya.
 
-- Fitur penting yang memiliki nilai kosong dihapus barisnya agar tidak mengganggu proses selanjutnya.
-- Kolom non-kritis yang memiliki nilai `NaN` diisi dengan placeholder seperti `'Unknown'` agar tetap bisa diproses tanpa kehilangan data penting.
-
-#### 1.2 Duplikasi Data  
-Tidak ditemukan baris duplikat dalam dataset, sehingga tidak diperlukan penghapusan data redundan.
-
-#### 1.3 Konsistensi Tipe Data  
-Beberapa fitur numerik seperti `Score`, `Episodes`, dan `Rank` awalnya bertipe teks (`object`). Kolom-kolom tersebut dikonversi menjadi tipe numerik agar bisa digunakan dalam perhitungan statistik dan model rekomendasi.
+#### Tujuan:
+- Memastikan semua fitur penting memiliki data valid dan siap digunakan.
+- Mencegah error saat modeling akibat ketidakkonsistenan tipe data atau missing values.
 
 ---
 
-### 2. Normalisasi dan Pemrosesan Teks
+### 1.2 Format Genre dan Synopsis  
+Kolom `Genres` dan `Synopsis` diproses agar representasi konten menjadi seragam dan informatif:
 
-#### 2.1 Lowercasing  
-Untuk memastikan keseragaman teks, seluruh isi kolom `Genres` dan `Synopsis` diubah menjadi huruf kecil (*lowercase*), sehingga kata seperti "Action" dan "action" dianggap sebagai satu entitas yang sama.
+- `Genres` yang awalnya berupa string (misalnya `"Action, Adventure"`) dipisahkan menjadi list untuk encoding multi-label.
+- `Synopsis` dibersihkan dari karakter non-alfabet dan diubah menjadi huruf kecil (*lowercase*) agar konsisten dalam analisis teks.
 
-#### 2.2 Split Genre  
-Genre anime yang awalnya berbentuk string terpisah koma diubah menjadi list agar siap untuk encoding lebih lanjut.
-
-#### 2.3 Pembersihan Synopsis  
-Deskripsi anime pada kolom `Synopsis` dibersihkan dari karakter non-alfabet dan angka untuk memperjelas fokus pada kata-kata penting.
-
----
-
-### 3. Vektorisasi Fitur Teksual
-
-#### 3.1 TF-IDF untuk Synopsis  
-Deskripsi anime diubah menjadi representasi vektor menggunakan metode **TF-IDF (Term Frequency - Inverse Document Frequency)**. Representasi ini memungkinkan sistem mengukur kemiripan antar-anime berdasarkan deskripsinya.
-
-#### 3.2 Encoding Genre  
-Genre yang berupa list dari masing-masing judul anime diubah menjadi bentuk biner menggunakan teknik **MultiLabelBinarizer**, sehingga dapat digunakan dalam perhitungan kemiripan konten.
+#### Tujuan:
+- Menghindari duplikasi genre yang sama tetapi format berbeda.
+- Menyeragamkan teks deskripsi agar tidak ada bias akibat kapitalisasi atau karakter aneh.
+- Siap untuk vektorisasi dan encoding lebih lanjut.
 
 ---
 
-### 4. Encoding Fitur Kategorikal
+### 1.3 Konsistensi Tipe Data  
+Beberapa fitur numerik seperti `Score`, `Episodes`, dan `Rank` seharusnya bertipe `float64` atau `int64`, namun dalam dataset asli bertipe `object`.
 
-Fitur kategorikal seperti `Type` dan `Rating` diubah menjadi bentuk numerik menggunakan teknik encoding agar dapat dimasukkan ke dalam model machine learning.
-
----
-
-### 5. Normalisasi Fitur Numerik
-
-Beberapa fitur numerik seperti `Score` dan `Members` dinormalisasi ke rentang [0, 1] agar semua fitur memiliki bobot yang seimbang saat digabungkan dalam model.
+#### Tujuan:
+- Agar fitur-fitur ini bisa digunakan dalam operasi matematis dan model regresi.
+- Meningkatkan stabilitas dan akurasi model machine learning.
 
 ---
 
-### 6. Gabung Semua Fitur
+### **2. Encoding Fitur Kategorikal**
 
-Seluruh fitur yang telah diproses — termasuk genre, deskripsi, tipe, rating, serta skor dan jumlah penggemar — digabung menjadi satu matriks fitur final. Matriks ini akan menjadi dasar untuk menghitung kemiripan antar-anime menggunakan metrik seperti *cosine similarity*.
+Fitur seperti `Type` dan `Rating` bersifat kategorikal dan tidak dapat langsung digunakan oleh model machine learning. Oleh karena itu, dilakukan Label Encoding untuk mengubahnya menjadi bentuk numerik.
 
----
-
-### 7. Pembagian Data Latih dan Uji (Opsional)
-
-Jika sistem rekomendasi dikembangkan lebih jauh dengan pendekatan prediktif (misalnya regresi untuk memprediksi skor anime), maka data dibagi menjadi dua bagian:
-
-- **80% untuk pelatihan model**
-- **20% untuk evaluasi dan validasi**
-
-Teknik ini membantu mengevaluasi performa model secara objektif.
+#### Tujuan:
+- Merubah data kualitatif menjadi bentuk yang dapat diproses oleh algoritma machine learning.
+- Memudahkan integrasi fitur kategorikal ke dalam matriks gabungan untuk rekomendasi.
 
 ---
 
-#### Ringkasan Tahapan
+### **3. Normalisasi Fitur Numerik**
 
-| No | Langkah                        | Tujuan Utama                                                                 |
-|----|----------------------------------|------------------------------------------------------------------------------|
-| 1  | Pembersihan Data                | Menjamin kualitas dan validitas data                                         |
-| 2  | Normalisasi Teks                | Membersihkan dan seragamkan format teks                                     |
-| 3  | Vektorisasi Teks               | Mengubah deskripsi dan genre menjadi vektor numerik                          |
-| 4  | Encoding Kategorikal             | Merubah fitur kategorikal menjadi bentuk numerik                             |
-| 5  | Normalisasi Numerik             | Menyamakan skala fitur numerik                                              |
-| 6  | Gabung Semua Fitur              | Membentuk feature matrix final untuk model                                    |
-| 7  | Pembagian Data Latih dan Uji   | Menyediakan data pelatihan dan pengujian untuk evaluasi model (opsional)     |
+Beberapa fitur numerik seperti `Score`, `Members`, dan `Popularity` dinormalisasi ke dalam skala `[0, 1]` menggunakan `MinMaxScaler`.
+
+#### Tujuan:
+- Menyamakan skala antar-fitur agar tidak ada fitur yang mendominasi secara tidak proporsional.
+- Membantu model machine learning bekerja lebih stabil dan akurat, terutama untuk algoritma yang sensitif terhadap skala data seperti KNN dan Gradient Boosting.
+
+---
+
+### **4. Ekstraksi Informasi Tambahan**
+
+Untuk menambah kedalaman dan personalisasi rekomendasi, dilakukan ekstraksi informasi tambahan dari kolom teks:
+
+- **Kolom `Aired`**: Diekstrak tahun rilis anime menggunakan *regular expression*.
+- **Kolom `Premiered`**: Diambil musim penayangan sebagai metadata tambahan.
+
+#### Tujuan:
+- Menambah konteks waktu dalam rekomendasi (misalnya: anime populer di tahun tertentu).
+- Memberikan variasi rekomendasi berdasarkan tren waktu atau musim.
+
+---
+
+### **5. Vektorisasi Fitur Teksual**
+
+Agar bisa digunakan dalam perhitungan kemiripan dan model machine learning, dua fitur teksual diubah menjadi representasi numerik:
+
+#### a. **TF-IDF Vectorizer – untuk Synopsis**
+Deskripsi anime (`Synopsis`) diubah menjadi vektor TF-IDF dengan maksimal 5000 fitur kata kunci. Teknik ini membantu sistem memahami makna cerita dan mengukur kedekatan semantik antar-anime.
+
+#### Tujuan:
+- Membuat representasi teks deskripsi yang informatif dan dapat diukur secara matematis.
+- Digunakan dalam cosine similarity dan model regresi/prediksi skor.
+
+#### b. **MultiLabelBinarizer – untuk Genres**
+Genre yang berbentuk list (misalnya: `"Action, Fantasy"`) diubah menjadi vektor biner untuk menangkap kombinasi genre dalam satu judul anime.
+
+#### Tujuan:
+- Mengubah genre menjadi bentuk yang bisa diolah dalam perhitungan matematika.
+- Menangkap hubungan multi-label antar-genre untuk rekomendasi yang lebih presisi.
+
+---
+
+### **6. Penggabungan Semua Fitur**
+
+Seluruh fitur yang telah diproses — termasuk:
+- Representasi genre (binary)
+- Deskripsi (TF-IDF)
+- Metadata kategorikal (Type, Rating) yang sudah di-encode
+- Fitur numerik yang ternormalisasi (Score, Members, Popularity)
+
+digabungkan menggunakan fungsi `hstack()` dari `scipy.sparse` untuk membentuk sebuah matriks fitur gabungan (*combined feature matrix*).
+
+#### Tujuan:
+- Menggabungkan semua jenis fitur (teks, kategori, numerik) dalam satu representasi vektor tunggal.
+- Menjadi input utama untuk proses rekomendasi dan prediksi skor anime.
+
+---
+
+### **7. Pembagian Data Latih dan Uji (Opsional)**
+
+Jika ingin melakukan evaluasi model secara kuantitatif (misalnya dengan RMSE dan R²), dataset dibagi menjadi dua subset:
+
+- **80% data latih**: untuk melatih model memprediksi skor anime.
+- **20% data uji**: untuk menguji akurasi model secara objektif.
+
+Pembagian dilakukan menggunakan `train_test_split` dari `sklearn.model_selection` dengan `random_state=42` agar hasilnya reprodusibel.
+
+#### Tujuan:
+- Memvalidasi performa model secara objektif.
+- Memastikan bahwa model tidak hanya hafal data latih (overfitting), tetapi juga generalisasi baik ke data baru.
+
+---
+
+### 8. Ringkasan Tahapan Preprocessing
+
+| No | Langkah                      | Alasan Perlu Dilakukan                                      | Tujuan Utama                                                                 |
+|----|------------------------------|-------------------------------------------------------------|--------------------------------------------------------------------------------|
+| 1  | Pembersihan Data             | Dataset awal mengandung nilai 'Unknown' dan tipe data tidak sesuai | Memastikan data siap untuk proses encoding, vektorisasi, dan modeling         |
+| 2  | Encoding Kategorikal          | Fitur `Type` dan `Rating` tidak bisa diproses oleh model ML   | Merubah data kategorikal menjadi bentuk numerik agar bisa digunakan dalam model |
+| 3  | Normalisasi Numerik           | Skala fitur berbeda-beda (misalnya Score vs Members)         | Menyamakan bobot fitur agar tidak ada dominasi dari skala                    |
+| 4  | Ekstraksi Informasi Tambahan | Menambah konteks tambahan seperti tahun dan musim              | Memperkaya metadata untuk rekomendasi berbasis tren                          |
+| 5  | Vektorisasi Fitur Teksual    | Anime direpresentasikan dalam bentuk vektor numerik          | Mempertimbangkan konten dan genre dalam rekomendasi                           |
+| 6  | Penggabungan Fitur           | Menggabungkan semua jenis fitur dalam satu matriks           | Membentuk representasi komplit setiap anime                                  |
+| 7  | Pembagian Data Latih & Uji  | Untuk pengujian model secara kuantitatif                     | Mengukur performa model secara objektif dengan metrik seperti RMSE dan R²      |
 
 ---
 
@@ -552,13 +604,6 @@ $$
 - Penyebut ($\sum (y_i - \bar{y})^2$) adalah total variasi data aktual terhadap rata-rata (Total Sum of Squares, TSS)
 - Nilai $R^2$ berkisar antara 0 sampai 1, semakin mendekati 1 menunjukkan model semakin baik dalam menjelaskan variabilitas data
 
-
-#### 3. **Validasi Manual Rekomendasi**
-- Karena tidak ada ground truth eksplisit untuk rekomendasi (tidak ada data interaksi pengguna), dilakukan validasi manual terhadap hasil rekomendasi.
-- Validasi dilakukan dengan melihat apakah anime-anime yang direkomendasikan memiliki genre, deskripsi, dan tema yang serupa dengan anime input.
-
----
-
 ### Hasil Evaluasi Model Regresi
 
 Tiga model pembelajaran mesin diuji coba untuk memprediksi skor anime berdasarkan fitur konten:
@@ -609,7 +654,6 @@ Berdasarkan evaluasi menggunakan **RMSE** dan **R² Score**, serta validasi manu
 Meskipun belum melibatkan data interaksi pengguna, sistem ini sudah cukup kuat untuk digunakan oleh pengguna baru atau sebagai fitur pencarian berbasis konten.
 
 ---
-
 
 ---
 
