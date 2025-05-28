@@ -59,6 +59,8 @@ Untuk menghasilkan daftar Top-N anime yang relevan bagi pengguna, beberapa model
 Evaluasi model dilakukan melalui dua pendekatan utama:
 - **Evaluasi kuantitatif**: Menggunakan metrik RMSE dan R² untuk membandingkan akurasi prediksi model.
 
+---
+
 ## **Data Understanding**
 ### **1. Informasi Dataset**
 Metadata Dataset
