@@ -367,10 +367,18 @@ Algoritma KNN digunakan sebagai baseline untuk memprediksi skor anime berdasarka
 #### Rumus Jarak (Euclidean Distance)
 Untuk menentukan tetangga terdekat, KNN menggunakan jarak Euclidean:
 
-> Rumus:  
+Rumus:
+
 $$
-\text{Euclidean Distance} = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2 + \dots}
+\text{Euclidean Distance} = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2 + \cdots + (z_1 - z_2)^2}
 $$
+
+#### Keterangan:
+- $x_1, y_1, \dots, z_1$: Komponen dari vektor pertama
+- $x_2, y_2, \dots, z_2$: Komponen dari vektor kedua
+- $\sqrt{\cdot}$: Akar kuadrat dari jumlah kuadrat selisih komponen-komponen vektor
+- Simbol $\cdots$ menunjukkan penjumlahan untuk semua dimensi vektor yang ada
+
 
 #### Parameter Utama:
 - `n_neighbors = 5`
@@ -395,11 +403,13 @@ Random Forest digunakan untuk memprediksi skor anime berdasarkan fitur-fitur kon
 #### Rumus Prediksi (Aggregation of Trees)
 Prediksi akhir diperoleh dari rata-rata hasil dari seluruh pohon:
 
-> Rumus:  
+Rumus:  
+
 $$
 \hat{y} = \frac{1}{T} \sum_{t=1}^{T} \hat{y}_t
 $$
 
+#### Keterangan:
 - $ T $: jumlah pohon (trees) dalam forest
 - $ \hat{y}_t $: prediksi dari tiap pohon
 
@@ -424,11 +434,14 @@ Gradient Boosting juga digunakan untuk memprediksi skor anime. Teknik ini memban
 
 #### Rumus Pembaruan Model (Boosting Iteratif)
 
-> Rumus:  
+Rumus: 
+
 $$
 F_m(x) = F_{m-1}(x) + \eta \cdot h_m(x)
 $$
 
+
+#### Keterangan:
 - $ F_m(x) $: Model pada iterasi ke-m
 - $ \eta $: Learning rate (koefisien pembaruan model)
 - $ h_m(x) $: Weak learner (pohon keputusan) pada iterasi ke-m
@@ -533,19 +546,41 @@ Pada tahap ini dilakukan evaluasi terhadap model sistem rekomendasi yang telah d
 - Digunakan untuk mengevaluasi akurasi model regresi yang memprediksi skor anime.
 - Semakin rendah nilai RMSE, semakin baik prediksi dari model tersebut.
 
-> Rumus:
+Rumus:
+
 $$
 \text{RMSE} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}
 $$
+
+#### Keterangan:
+- $n$: Jumlah data pengamatan
+- $y_i$: Nilai aktual pada data ke-$i$
+- $\hat{y}_i$: Nilai prediksi model pada data ke-$i$
+- $\sum$: Simbol penjumlahan dari $i=1$ sampai $n$
+- RMSE (Root Mean Squared Error) mengukur rata-rata besar kesalahan prediksi model dalam satuan yang sama dengan data asli
+- Nilai RMSE yang lebih kecil menunjukkan model dengan prediksi yang lebih akurat
+
 
 #### 2. **R² Score (Koefisien Determinasi)**
 - Mengukur seberapa besar variasi target (`Score`) dapat dijelaskan oleh model.
 - Nilainya berkisar antara 0 hingga 1, dimana semakin mendekati 1 menunjukkan kemampuan model menjelaskan data semakin tinggi.
 
-> Rumus:
+Rumus:
+
 $$
 R^2 = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}
 $$
+
+#### Keterangan:
+- $n$: Jumlah data pengamatan
+- $y_i$: Nilai aktual pada data ke-$i$
+- $\hat{y}_i$: Nilai prediksi model pada data ke-$i$
+- $\bar{y}$: Rata-rata nilai aktual seluruh data
+- $\sum$: Simbol penjumlahan dari $i=1$ sampai $n$
+- Pembilang ($\sum (y_i - \hat{y}_i)^2$) adalah jumlah kuadrat error prediksi (Residual Sum of Squares, RSS)
+- Penyebut ($\sum (y_i - \bar{y})^2$) adalah total variasi data aktual terhadap rata-rata (Total Sum of Squares, TSS)
+- Nilai $R^2$ berkisar antara 0 sampai 1, semakin mendekati 1 menunjukkan model semakin baik dalam menjelaskan variabilitas data
+
 
 #### 3. **Validasi Manual Rekomendasi**
 - Karena tidak ada ground truth eksplisit untuk rekomendasi (tidak ada data interaksi pengguna), dilakukan validasi manual terhadap hasil rekomendasi.
@@ -570,7 +605,7 @@ Tiga model pembelajaran mesin diuji coba untuk memprediksi skor anime berdasarka
 
 ---
 
-## 📈 Visualisasi Hasil Evaluasi
+## Visualisasi Hasil Evaluasi
 
 ### 1. **Bar Chart: RMSE per Model**
 
@@ -592,7 +627,7 @@ Tiga model pembelajaran mesin diuji coba untuk memprediksi skor anime berdasarka
 
 ---
 
-## 🧠 Analisis Manual Rekomendasi
+##  Analisis Manual Rekomendasi
 
 Contoh rekomendasi untuk judul *"Naruto"*:
 
@@ -619,12 +654,6 @@ Contoh rekomendasi untuk judul *"Naruto"*:
 | KNN                                  | - Sederhana<br>- Mudah dipahami                                            | - Sensitif terhadap skala data<br>- Lambat pada dataset besar |
 | Gabungan CBF + Prediksi Skor         | - Meningkatkan personalisasi rekomendasi                                   | - Lebih kompleks                                             |
 
----
-
-5. **Implementasi Hybrid Approach (Opsional)**
-   - Jika tersedia data rating pengguna, gabung dengan sistem rekomendasi berbasis konten untuk pendekatan hybrid.
-
----
 
 ## Kesimpulan
 
