@@ -562,7 +562,10 @@ Pada tahap ini dilakukan evaluasi terhadap model sistem rekomendasi yang telah d
 
 ### Rumus:
 
-`RMSE = √[(1/n) × Σ(yᵢ - ŷᵢ)²]`
+$$
+\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
+$$
+
 
 #### Keterangan:
 - $n$: Jumlah total data/pengamatan  
