@@ -645,8 +645,47 @@ Contoh rekomendasi untuk judul *"Naruto"*:
 - Rekomendasi relevan secara kontekstual dan sesuai dengan pola konten.
 
 ---
+##  Analisis Kuantitatif Rekomendasi
+Berikut adalah hasil rekomendasi berbasis konten (*content-based filtering*) menggunakan cosine similarity untuk judul `"Naruto"`:
 
-## Kelebihan dan Kekurangan Pendekatan yang Dipilih
+| No | Judul Anime                                      | Score  | Genres                                | Similarity |
+|----|--------------------------------------------------|--------|----------------------------------------|------------|
+| 1  | Naruto: Shippuden                               | 8.26   | Action, Adventure, Fantasy              | 0.9826     |
+| 2  | Boruto: Naruto Next Generations                  | 6.06   | Action, Adventure, Fantasy              | 0.9767     |
+| 3  | One Piece                                       | 8.69   | Action, Adventure, Fantasy              | 0.9708     |
+| 4  | Hunter x Hunter (2011)                           | 9.04   | Action, Adventure, Fantasy              | 0.9708     |
+| 5  | Nanatsu no Taizai                                 | 7.67   | Action, Adventure, Fantasy              | 0.9707     |
+| 6  | Bleach                                          | 7.92   | Action, Adventure, Fantasy              | 0.9703     |
+| 7  | Nanatsu no Taizai: Imashime no Fukkatsu         | 7.59   | Action, Adventure, Fantasy              | 0.9698     |
+| 8  | Fairy Tail                                     | 7.57   | Action, Adventure, Fantasy              | 0.9695     |
+| 9  | Dungeon ni Deai wo Motomeru no wa Machigatteiru… | 7.55   | Action, Adventure, Fantasy              | 0.9692     |
+| 10 | Log Horizon                                      | 7.93   | Action, Adventure, Fantasy              | 0.9682     |
+
+>  *Keterangan*:  
+- **Score**: Skor rata-rata dari komunitas MyAnimeList.
+- **Genres**: Genre utama dari anime tersebut.
+- **Similarity**: Nilai kemiripan konten terhadap *"Naruto"* menggunakan metrik *cosine similarity* (semakin mendekati 1, semakin mirip).
+
+---
+
+#### **Analisis Hasil Rekomendasi**
+
+Hasil menunjukkan bahwa:
+- **Top rekomendasi** adalah *Naruto: Shippuden*, sebagai lanjutan langsung dari seri utama, memiliki genre dan alur cerita sangat serupa.
+- **One Piece**, **Hunter x Hunter (2011)**, dan **Bleach** juga masuk dalam daftar karena kesamaan genre seperti *Action*, *Adventure*, dan *Fantasy*.
+- Semua anime dalam daftar memiliki elemen aksi dan petualangan, menjadikannya relevan secara kontekstual untuk penggemar *Naruto*.
+- Meskipun beberapa anime memiliki skor lebih tinggi dari *Naruto*, sistem berhasil merekomendasikan anime yang benar-benar sesuai preferensi genre dan tema.
+
+---
+
+#### **Keunggulan Sistem Rekomendasi**
+- Berbasis konten, sehingga tidak memerlukan data interaksi pengguna.
+- Menggunakan kombinasi fitur seperti genre, deskripsi, dan metadata untuk meningkatkan akurasi rekomendasi.
+- Dapat memberikan rekomendasi yang personal dan relevan hanya berdasarkan satu judul input.
+
+---
+
+### **Kelebihan dan Kekurangan Pendekatan yang Dipilih**
 
 | Model/Approach                        | Kelebihan                                                                 | Kekurangan                                                  |
 |--------------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------------|
