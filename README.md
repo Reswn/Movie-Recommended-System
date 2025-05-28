@@ -562,7 +562,9 @@ Pada tahap ini dilakukan evaluasi terhadap model sistem rekomendasi yang telah d
 
 ### Rumus:
 
-![R² formula](https://latex.codecogs.com/png.image?\dpi{110} R^2%20=%201%20-%20\frac{\sum_{i=1}^{n}(y_i%20-%20\hat{y}_i)^2}{\sum_{i=1}^{n}(y_i%20-%20\bar{y})^2})
+$$
+\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
+$$
 
 
 
