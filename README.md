@@ -28,7 +28,7 @@ Situasi ini menciptakan urgensi tinggi bagi platform untuk mengembangkan sistem 
 - Mengintegrasikan pendekatan content-based filtering untuk menghasilkan rekomendasi yang lebih kontekstual dan adaptif terhadap profil pengguna.
 
 
-## **Solution Approach**
+### **Solution Approach**
 Untuk mencapai tujuan proyek dalam memberikan rekomendasi anime yang sesuai dengan preferensi pengguna, berikut beberapa pendekatan teknis dan algoritmik yang diterapkan:
 
 ### 1. Eksplorasi dan Pra-pemrosesan Data
@@ -343,7 +343,7 @@ Pembagian dilakukan menggunakan `train_test_split` dari `sklearn.model_selection
 
 ---
 
-Modeling and Result
+Modeling 
 ---
 
 Pada tahap ini, dibangun sistem rekomendasi berbasis konten (*Content-Based Filtering*) dan diuji coba beberapa model regresi untuk memprediksi skor anime. Tujuan dari tahapan ini adalah menghasilkan **Top-N rekomendasi anime** yang relevan berdasarkan konten dan genre dari judul input.
