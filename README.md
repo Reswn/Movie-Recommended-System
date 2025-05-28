@@ -334,17 +334,17 @@ Setiap anime direpresentasikan sebagai vektor gabungan dari:
 #### Metrik Kemiripan: Cosine Similarity  
 Digunakan untuk mengukur kedekatan antara dua anime dalam ruang fitur. Nilainya berkisar antara 0 hingga 1, di mana semakin tinggi nilainya, semakin mirip dua anime tersebut.
 
-> Rumus:
+Rumus:
+
 $$
-\text{Cosine Similarity} = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}
+\text{Cosine Similarity} = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \, \|\mathbf{B}\|}
 $$
 
 #### Keterangan:
-- $ \mathbf{A}, \mathbf{B} $: Vektor fitur dari dua anime
-- $ \cdot $: Operasi *dot product* antara vektor A dan B
-- $ \|\mathbf{A}\|, \|\mathbf{B}\| $: Magnitudo (panjang) dari masing-masing vektor
+- $\mathbf{A}, \mathbf{B}$: Vektor fitur dari dua anime
+- $\cdot$: Operasi *dot product* antara vektor $\mathbf{A}$ dan $\mathbf{B}$
+- $\|\mathbf{A}\|, \|\mathbf{B}\|$: Magnitudo (panjang) dari masing-masing vektor
 
----
 
 
 #### Contoh Output Rekomendasi  
