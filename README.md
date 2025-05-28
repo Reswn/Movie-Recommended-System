@@ -300,6 +300,8 @@ Teknik ini membantu mengevaluasi performa model secara objektif.
 
 ---
 
+Modeling
+---
 
 Pada tahap ini, dibangun sistem rekomendasi berbasis konten (*Content-Based Filtering*) dan diuji coba beberapa model regresi untuk memprediksi skor anime. Tujuan dari tahapan ini adalah menghasilkan **Top-N rekomendasi anime** yang relevan berdasarkan konten dan genre dari judul input.
 
