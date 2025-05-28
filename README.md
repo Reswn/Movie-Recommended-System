@@ -406,15 +406,15 @@ Random Forest digunakan untuk memprediksi skor anime berdasarkan fitur-fitur kon
 #### Rumus Prediksi (Aggregation of Trees)
 Prediksi akhir diperoleh dari rata-rata hasil dari seluruh pohon:
 
-Rumus:  
+### Rumus:
 
-$$
-\hat{y} = \frac{1}{T} \sum_{t=1}^{T} \hat{y}_t
-$$
+ŷ = (1 / T) * Σ ŷₜ
 
-#### Keterangan:
-- $ T $: jumlah pohon (trees) dalam forest
-- $ \hat{y}_t $: prediksi dari tiap pohon
+### Keterangan:
+- T: Jumlah pohon dalam Random Forest
+- ŷₜ: Prediksi dari pohon ke-t
+- ŷ: Prediksi akhir model, diperoleh dari rata-rata semua prediksi pohon
+
 
 #### Parameter Utama:
 - `n_estimators = 100`
@@ -436,18 +436,16 @@ $$
 Gradient Boosting juga digunakan untuk memprediksi skor anime. Teknik ini membangun model secara bertahap dengan fokus pada error dari model sebelumnya.
 
 #### Rumus Pembaruan Model (Boosting Iteratif)
+### Rumus:
 
-Rumus: 
+Fₘ(x) = Fₘ₋₁(x) + η · hₘ(x)
 
-$$
-F_m(x) = F_{m-1}(x) + \eta \cdot h_m(x)
-$$
+### Keterangan:
+- Fₘ(x): Model pada iterasi ke-m
+- Fₘ₋₁(x): Model pada iterasi sebelumnya
+- η: Learning rate (mengatur seberapa besar kontribusi pembaruan)
+- hₘ(x): Weak learner (decision tree) pada iterasi ke-m
 
-
-#### Keterangan:
-- $ F_m(x) $: Model pada iterasi ke-m
-- $ \eta $: Learning rate (koefisien pembaruan model)
-- $ h_m(x) $: Weak learner (pohon keputusan) pada iterasi ke-m
 
 #### Parameter Utama:
 - `n_estimators = 100`
@@ -549,19 +547,19 @@ Pada tahap ini dilakukan evaluasi terhadap model sistem rekomendasi yang telah d
 - Digunakan untuk mengevaluasi akurasi model regresi yang memprediksi skor anime.
 - Semakin rendah nilai RMSE, semakin baik prediksi dari model tersebut.
 
-Rumus:
+### Rumus:
 
 $$
-\text{RMSE} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}
+\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
 $$
 
-#### Keterangan:
-- $n$: Jumlah data pengamatan
-- $y_i$: Nilai aktual pada data ke-$i$
-- $\hat{y}_i$: Nilai prediksi model pada data ke-$i$
-- $\sum$: Simbol penjumlahan dari $i=1$ sampai $n$
-- RMSE (Root Mean Squared Error) mengukur rata-rata besar kesalahan prediksi model dalam satuan yang sama dengan data asli
-- Nilai RMSE yang lebih kecil menunjukkan model dengan prediksi yang lebih akurat
+### Keterangan:
+- $n$: Jumlah total data/pengamatan  
+- $y_i$: Nilai aktual (ground truth) pada data ke-$i$  
+- $\hat{y}_i$: Nilai prediksi dari model pada data ke-$i$  
+- $\sum$: Simbol penjumlahan dari $i = 1$ hingga $n$  
+- RMSE (**Root Mean Squared Error**) adalah metrik yang mengukur rata-rata besarnya kesalahan antara nilai prediksi dan nilai aktual dalam satuan yang sama dengan data aslinya.  
+- Semakin kecil nilai RMSE, semakin akurat model dalam melakukan prediksi.
 
 
 #### 2. **R² Score (Koefisien Determinasi)**
