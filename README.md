@@ -323,7 +323,7 @@ digabungkan menggunakan fungsi `hstack()` dari `scipy.sparse` untuk membentuk se
 
 ---
 
-### **7. Pembagian Data Latih dan Uji (Opsional)**
+### **7. Pembagian Data Latih dan Uji**
 
 Jika ingin melakukan evaluasi model secara kuantitatif (misalnya dengan RMSE dan R²), dataset dibagi menjadi dua subset:
 
