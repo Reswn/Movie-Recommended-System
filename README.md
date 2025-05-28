@@ -1,5 +1,6 @@
 # Laporan Proyek Machine Learning - RENI KARTIKA SUWANDI
-![Cover](https://github.com/Reswn/Anime-Recomendation-System/blob/main/src/Sampul.jpg?raw=true)
+![Cover](https://github.com/Reswn/Anime-Recomendation-System/blob/main/src/Sampul.jpg?raw=true) 
+
 ## Project Overview
 Anime merupakan salah satu bentuk hiburan visual yang sangat populer, terutama di kalangan generasi muda. Kepopulerannya tidak hanya terbatas di Jepang, tetapi juga telah merambah hingga ke berbagai belahan dunia, termasuk Indonesia. Namun, tingginya minat terhadap anime juga membawa tantangan tersendiri, yakni banyaknya jumlah judul dan ragam genre yang membuat pengguna kesulitan memilih tontonan yang sesuai dengan selera mereka. Oleh karena itu, sistem rekomendasi menjadi solusi penting untuk mempermudah pengguna dalam menemukan anime yang relevan dan menarik bagi mereka. Sistem seperti ini bertujuan untuk menyederhanakan proses pencarian dan meningkatkan kepuasan pengguna terhadap platform penyedia layanan tontonan.
 
@@ -99,7 +100,7 @@ Dataset terdiri dari informasi lengkap mengenai berbagai judul anime, termasuk d
 
 ---
 ## Exploratory Data Analysis
-### 5 Baris Pertama Dataset
+### 1. Informasi 5 Baris Pertama Dataset
 
 Berikut merupakan tampilan lima baris pertama dari dataset anime yang digunakan dalam proyek ini:
 
@@ -112,11 +113,11 @@ Berikut merupakan tampilan lima baris pertama dari dataset anime yang digunakan 
 | 8        | Bouken Ou Beet                       | Beet the Vandel Buster       | 冒険王ビィト                                 | 6.94  | Adventure, Fantasy, Supernatural           | It is the dark century and the people are suffering under darkness...  | TV    | 52         | Sep 30, 2004 to Sep 29, 2005    | Toei Animation | Manga    | 23 min per ep     | PG - Children                    | 4240.0 | 5126       | 14        | 6413.0    | 15001    | https://cdn.myanimelist.net/images/anime/7/215...  |
 
 
-**Catatan**: Setiap baris merepresentasikan informasi tentang satu judul anime, mulai dari nama, genre, deskripsi, hingga metadata seperti studio dan durasi.
+> **Catatan**: Setiap baris merepresentasikan informasi tentang satu judul anime, mulai dari nama, genre, deskripsi, hingga metadata seperti studio dan durasi.
 
 
 
-## Variabel Dataset Anime Recommendation
+### 2. Variabel Dataset Anime Recommendation
 
 Dataset ini berisi informasi lengkap mengenai berbagai judul anime, termasuk deskripsi, genre, popularitas, rating, dan metadata lainnya yang relevan untuk membangun sistem rekomendasi berbasis konten (*content-based filtering*). Berikut adalah deskripsi masing-masing variabel:
 
@@ -151,36 +152,36 @@ Dataset ini berisi informasi lengkap mengenai berbagai judul anime, termasuk des
 
 ---
 
-## Ringkasan Informasi Dataset
+### 3. Ringkasan Informasi Dataset
 
 Dataset yang digunakan dalam proyek sistem rekomendasi anime ini memiliki struktur sebagai berikut:
 
-### Ukuran Dataset:
+#### **Ukuran Dataset:**
 - **Jumlah Baris**: 24.905 entri anime
 - **Jumlah Kolom**: 24 kolom (variabel)
 
-### Tipe Data:
+#### **Tipe Data:**
 - **Fitur Numerik (`int64`) → 4 kolom**:
   - `anime_id`, `Popularity`, `Favorites`, `Members`
 - **Fitur Teksual/Kategorikal (`object`) → 20 kolom**:
   - `Name`, `English name`, `Other name`, `Score`, `Genres`, `Synopsis`, `Type`, `Episodes`, `Aired`, `Premiered`, `Status`, `Producers`, `Licensors`, `Studios`, `Source`, `Duration`, `Rating`, `Rank`, `Scored By`, `Image URL`
 
-### Target Variabel:
+#### **Target Variabel:**
 Tidak ada target eksplisit seperti dalam kasus regresi atau klasifikasi, karena ini adalah proyek sistem rekomendasi. Namun, beberapa fitur penting yang digunakan untuk rekomendasi antara lain:
 - `Genres`: Digunakan untuk encoding dan representasi vektor genre.
 - `Synopsis`: Diubah menjadi vektor numerik dengan TF-IDF untuk pencarian berbasis konten.
 - `Score`, `Rank`, `Popularity`: Digunakan sebagai indikator kualitas dan popularitas anime.
 
-### Ciri Statistik dan Distribusi Data:
+#### **Ciri Statistik dan Distribusi Data:**
 - Semua kolom **tidak memiliki missing values**, sehingga tidak memerlukan imputasi.
 - Beberapa kolom numerik seperti `Score`, `Episodes`, `Rank`, dan `Scored By` saat ini masih bertipe `object` dan perlu dikonversi ke tipe numerik sebelum analisis lanjutan.
 - Dataset mencakup variasi besar jenis anime, dari anime populer dengan skor tinggi hingga yang kurang dikenal.
 - Terdapat potensi outlier pada kolom `Favorites` dan `Members` karena perbedaan jumlah yang signifikan antar-anime.
 - Fitur teks seperti `Synopsis` dan `Genres` membutuhkan proses preprocessing seperti tokenisasi, stopword removal, dan vectorization agar dapat digunakan dalam model rekomendasi.
 
-### Visualisasi Genre
+### 4. Analisis Visualisasi
 
-#### 1. Top 15 Anime Genres
+#### 4.1 Top 15 Anime Genres
 
 Salah satu aspek penting dalam analisis dataset anime adalah memahami distribusi genre yang paling umum di antara judul-judul anime. Berikut adalah visualisasi frekuensi genre anime teratas berdasarkan dataset:
 
@@ -192,21 +193,21 @@ Salah satu aspek penting dalam analisis dataset anime adalah memahami distribusi
 - **Genre Klasik**: Genre seperti `Action`, `Adventure`, dan `Sci-Fi` juga sangat populer, dengan frekuensi masing-masing sekitar 3.800–4.800.
 - **Genre Minor**: Beberapa genre seperti `Sports`, `Avant Garde`, dan `Ecchi` memiliki frekuensi yang lebih rendah, menunjukkan bahwa mereka kurang umum dibandingkan genre utama.
 
-#### 2. Analisis Popularitas
+#### 4.2 Analisis Popularitas
 ![Populer](https://github.com/Reswn/Anime-Recomendation-System/blob/main/src/Anime%20populer.png)
 #### Insight Utama:
 - **Shingeki no Kyojin** menjadi anime paling populer dengan `Popularity = 1`.
 - Genre utama dari anime-anime ini umumnya adalah **Action**, **Adventure**, dan **Fantasy**, menunjukkan bahwa genre tersebut sangat diminati oleh komunitas MyAnimeList.
 - Beberapa judul legendaris seperti **Naruto** dan **Death Note** masih memiliki posisi tinggi meskipun sudah lama dirilis, membuktikan daya tarik jangka panjang dari anime berkualitas tinggi.
 
-#### 3. Analisis Top 10 Anime dengan Rank Tertinggi
+#### 4.3 Analisis Top 10 Anime dengan Rank Tertinggi
 ![Top 10 Anime Rank](https://github.com/Reswn/Anime-Recomendation-System/blob/main/src/anime%20rating%20highest.png)
 #### Insight Utama:
 - **Fullmetal Alchemist: Brotherhood** menduduki peringkat pertama dengan skor rata-rata hampir sempurna (>9.15), menjadikannya salah satu anime paling dikagumi di komunitas.
 - Serial **Gintama** muncul dalam beberapa versi, menunjukkan bahwa franchise ini tidak hanya populer tetapi juga konsisten menghasilkan kualitas cerita yang baik.
 - **Hunter x Hunter (2011)** berada di peringkat 10, meskipun sering dianggap sebagai salah satu anime dengan cerita paling kompleks dan strategis.
 
-#### 4. Distribusi Data Popularity vs Rank
+#### 4.4 Distribusi Data Popularity vs Rank
 ![Plot Popularity vs Rank](https://github.com/Reswn/Anime-Recomendation-System/blob/main/src/popularity%20vs%20rank.png)
 
 ##### Insight Utama dari Scatter Plot Popularity vs. Rank
@@ -226,7 +227,7 @@ Salah satu aspek penting dalam analisis dataset anime adalah memahami distribusi
 
 ---
 
-## Interpretasi untuk Sistem Rekomendasi
+### 5. Interpretasi untuk Sistem Rekomendasi
 - Menggunakan **popularitas** sebagai faktor awal rekomendasi untuk pengguna baru, karena anime populer cenderung aman dan diminati banyak orang.
 - Menggabungkan dengan **peringkat** untuk memastikan kualitas anime tetap terjaga dan sesuai preferensi pengguna.
 - Anime dengan **peringkat tinggi tapi popularitas rendah** bisa direkomendasikan untuk pengguna yang ingin menjelajahi judul unik atau niche.
@@ -240,39 +241,39 @@ Pada tahap ini, data dipersiapkan agar siap digunakan dalam proses pembangunan s
 
 ### 1. Pembersihan Data
 
-#### Missing Values  
+#### 1.1 Missing Values  
 Dataset secara umum tidak memiliki nilai kosong pada fitur penting seperti `Genres`, `Synopsis`, dan `Score`. Meskipun demikian, beberapa kolom seperti `English name` dan `Other name` memiliki entri yang bernilai `NaN`. Untuk mengatasi hal ini:
 
 - Fitur penting yang memiliki nilai kosong dihapus barisnya agar tidak mengganggu proses selanjutnya.
 - Kolom non-kritis yang memiliki nilai `NaN` diisi dengan placeholder seperti `'Unknown'` agar tetap bisa diproses tanpa kehilangan data penting.
 
-#### Duplikasi Data  
+#### 1.2 Duplikasi Data  
 Tidak ditemukan baris duplikat dalam dataset, sehingga tidak diperlukan penghapusan data redundan.
 
-#### Konsistensi Tipe Data  
+#### 1.3 Konsistensi Tipe Data  
 Beberapa fitur numerik seperti `Score`, `Episodes`, dan `Rank` awalnya bertipe teks (`object`). Kolom-kolom tersebut dikonversi menjadi tipe numerik agar bisa digunakan dalam perhitungan statistik dan model rekomendasi.
 
 ---
 
 ### 2. Normalisasi dan Pemrosesan Teks
 
-#### Lowercasing  
+#### 2.1 Lowercasing  
 Untuk memastikan keseragaman teks, seluruh isi kolom `Genres` dan `Synopsis` diubah menjadi huruf kecil (*lowercase*), sehingga kata seperti "Action" dan "action" dianggap sebagai satu entitas yang sama.
 
-#### Split Genre  
+#### 2.2 Split Genre  
 Genre anime yang awalnya berbentuk string terpisah koma diubah menjadi list agar siap untuk encoding lebih lanjut.
 
-#### Pembersihan Synopsis  
+#### 2.3 Pembersihan Synopsis  
 Deskripsi anime pada kolom `Synopsis` dibersihkan dari karakter non-alfabet dan angka untuk memperjelas fokus pada kata-kata penting.
 
 ---
 
 ### 3. Vektorisasi Fitur Teksual
 
-#### TF-IDF untuk Synopsis  
+#### 3.1 TF-IDF untuk Synopsis  
 Deskripsi anime diubah menjadi representasi vektor menggunakan metode **TF-IDF (Term Frequency - Inverse Document Frequency)**. Representasi ini memungkinkan sistem mengukur kemiripan antar-anime berdasarkan deskripsinya.
 
-#### Encoding Genre  
+#### 3.2 Encoding Genre  
 Genre yang berupa list dari masing-masing judul anime diubah menjadi bentuk biner menggunakan teknik **MultiLabelBinarizer**, sehingga dapat digunakan dalam perhitungan kemiripan konten.
 
 ---
