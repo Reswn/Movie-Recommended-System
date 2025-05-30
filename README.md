@@ -1,6 +1,6 @@
 
 # 🎬 Movie Recommendation App (Streamlit)
-
+![Tampilan aplikasi - Halaman utama](https://github.com/Reswn/Movie-Recommended-System/blob/main/screencapture-localhost-8501-2025-05-29-14_57_52.png?raw=true )
 Aplikasi ini merekomendasikan film berdasarkan judul film yang dipilih oleh pengguna, menggunakan pendekatan **content-based filtering**. Dengan memanfaatkan teknik seperti cosine similarity, aplikasi ini memberikan rekomendasi film yang serupa berdasarkan genre, sinopsis, atau fitur lainnya.
 
 ---
